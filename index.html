@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#090909" />
+  <meta name="description" content="SportsWire brings live sports stats, trends, trivia, social competition, and sportsbook lines into one experience." />
+  <title>SportsWire — Sports IQ</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23090909'/%3E%3Cpath d='M13 31h10l6-8 7 17 5-9h10' fill='none' stroke='%23d0a42c' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="script.js" defer></script>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-mark"><svg viewBox="0 0 24 24" fill="none"><path d="M2.5 12h4l2.4-4.3 3.4 9 3.2-5.5h6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="brand-name">SportsWire<small>Sports IQ</small></div></div>
+      <div class="nav-label">Arena</div>
+      <nav class="nav">
+        <button class="nav-btn active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11.5 12 4l9 7.5V21H3z"/><path d="M9 21v-6h6v6"/></svg><span>Lobby</span></button>
+        <button class="nav-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><path d="M12 4v8l5 3"/></svg><span>Live Trivia</span></button>
+        <button class="nav-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V9m5 10V5m6 14v-7m5 7V3"/></svg><span>Stat Lab</span></button>
+        <button class="nav-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3h8v4a4 4 0 0 1-8 0z"/><path d="M6 5H3v2a5 5 0 0 0 5 5m10-7h3v2a5 5 0 0 1-5 5M12 11v7m-4 3h8"/></svg><span>Leaderboard</span></button>
+      </nav>
+      <div class="nav-label" style="margin-top:18px">You</div>
+      <nav class="nav">
+        <button class="nav-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c.7-5 3.3-7 8-7s7.3 2 8 7"/></svg><span>Profile</span></button>
+        <button class="nav-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19h16M6 16l3-4 3 2 5-7 2 2"/></svg><span>Performance</span></button>
+        <button class="nav-btn" id="settingsBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-4V21a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H3v-4h.2a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7 7 4.2l.1.1A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-1.6v-.2h4V3a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2v4H21a1.7 1.7 0 0 0-1.6 1Z"/></svg><span>Settings</span></button>
+      </nav>
+      <div class="season-pass"><strong>Season 08</strong><p>1,420 XP until the Playmaker division.</p><div class="progress"><span></span></div></div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="league-tabs">
+          <button class="league-tab active">For You</button><button class="league-tab">NFL</button><button class="league-tab">NBA</button><button class="league-tab">NCAAF</button><button class="league-tab">MLB</button><button class="league-tab">Soccer</button>
+        </div>
+        <div class="profile"><div class="streak">🔥 8 day streak</div><div class="avatar">CB</div></div>
+      </header>
+
+      <section class="hero">
+        <div class="hero-grid"></div>
+        <div class="live-pill"><i></i> LIVE · Q3 04:18</div>
+        <h1>Read the game.<br><span>Call the next play.</span></h1>
+        <p class="hero-copy">Three questions. Ninety seconds. Your sports IQ is on the clock.</p>
+        <button class="primary-btn" id="playLive">Play live challenge</button>
+        <div class="hero-score">
+          <div class="team"><div class="team-logo">🦅</div>Philadelphia</div>
+          <div class="scorebox"><b>17 — 20</b><small>3rd &amp; 7</small></div>
+          <div class="team"><div class="team-logo">⭐</div>Dallas</div>
+        </div>
+      </section>
+
+      <div class="section-head"><div><h2 id="slateTitle">Tonight's slate</h2><p id="slateSubtitle">Upcoming games across your favorite leagues.</p></div><div class="slate-actions"><button id="slatePrev" aria-label="Previous games">‹</button><button id="slateNext" aria-label="Next games">›</button></div></div>
+      <section class="matchups" id="matchups" aria-live="polite"></section>
+
+      <div class="section-head"><div><h2>Trending picks</h2><p>Build a card with the calls you believe in.</p></div><button id="clearPicks">Clear card</button></div>
+      <section class="market-grid" id="marketGrid">
+        <article class="market-card" data-question="Who finishes with more passing yards?">
+          <div class="market-top"><span>NFL · Player comparison</span><b>+120 XP</b></div>
+          <div class="question">Who finishes with more passing yards?</div>
+          <div class="pick-row"><button class="pick" data-choice="J. Hurts">J. Hurts</button><button class="pick" data-choice="D. Prescott">D. Prescott</button></div>
+          <div class="confidence"><span>COMMUNITY 62%</span><div class="confidence-bar"><i style="width:62%"></i></div></div>
+        </article>
+        <article class="market-card" data-question="Will the next possession end in points?">
+          <div class="market-top"><span>Live read · Next drive</span><b>+90 XP</b></div>
+          <div class="question">Will the next possession end in points?</div>
+          <div class="pick-row"><button class="pick" data-choice="Yes">Yes</button><button class="pick" data-choice="No">No</button></div>
+          <div class="confidence"><span>MODEL 54%</span><div class="confidence-bar"><i style="width:54%"></i></div></div>
+        </article>
+        <article class="market-card" data-question="Which defense forces the next turnover?">
+          <div class="market-top"><span>Defense · Game event</span><b>+150 XP</b></div>
+          <div class="question">Which defense forces the next turnover?</div>
+          <div class="pick-row"><button class="pick" data-choice="Philadelphia">Philadelphia</button><button class="pick" data-choice="Dallas">Dallas</button></div>
+          <div class="confidence"><span>COMMUNITY 48%</span><div class="confidence-bar"><i style="width:48%"></i></div></div>
+        </article>
+      </section>
+
+    </main>
+
+    <aside class="rail">
+      <div class="rail-head"><h2>My picks</h2><span id="pickCount">0 PICKS</span></div>
+      <div class="slip" id="slip"><div class="empty-slip"><div class="empty-icon">＋</div>Select an answer from any card to build your challenge.</div></div>
+      <div class="lock-box"><div class="lock-row"><span>Potential XP</span><b id="xpValue">0 XP</b></div><div class="lock-row" style="margin-top:7px"><span>Accuracy boost</span><b id="boostValue">1.0×</b></div><button class="lock-btn" id="lockBtn" disabled>Lock in picks</button></div>
+      <div class="insight"><h3>Your form</h3><div class="metric"><span class="metric-label">NFL</span><div class="metric-track"><i style="width:84%"></i></div><b>84</b></div><div class="metric"><span class="metric-label">NBA</span><div class="metric-track"><i style="width:71%"></i></div><b>71</b></div><div class="metric"><span class="metric-label">NCAA</span><div class="metric-track"><i style="width:63%"></i></div><b>63</b></div></div>
+    </aside>
+  </div>
+
+  <dialog class="settings-dialog" id="settingsDialog">
+    <div class="settings-head"><h2>Appearance</h2><button class="settings-close" id="settingsClose" aria-label="Close settings">×</button></div>
+    <div class="settings-body">
+      <h3>Accent theme</h3>
+      <p>Choose the color used for active states, progress, highlights, and primary actions.</p>
+      <div class="theme-grid">
+        <button class="theme-choice" data-theme="green" style="--swatch:#b7ff3c"><span class="theme-swatch"></span><strong>Original Green</strong><small>Electric and energetic</small></button>
+        <button class="theme-choice" data-theme="gold" style="--swatch:#d0a42c"><span class="theme-swatch"></span><strong>Sportsbook Gold</strong><small>Current theme</small></button>
+        <button class="theme-choice" data-theme="orange" style="--swatch:#ff8a24"><span class="theme-swatch"></span><strong>Orange</strong><small>Warm and bold</small></button>
+        <button class="theme-choice" data-theme="red" style="--swatch:#ff4d5a"><span class="theme-swatch"></span><strong>Red</strong><small>Competitive intensity</small></button>
+        <button class="theme-choice" data-theme="purple" style="--swatch:#a970ff"><span class="theme-swatch"></span><strong>Purple</strong><small>Distinct and premium</small></button>
+        <button class="theme-choice" data-theme="blue" style="--swatch:#49b7ff"><span class="theme-swatch"></span><strong>Blue</strong><small>Clean and analytical</small></button>
+      </div>
+      <div class="settings-note">Your selection is saved on this device. Custom colors can be added later.</div>
+    </div>
+  </dialog>
+
+  <nav class="mobile-nav"><button class="active">⌂<span>Lobby</span></button><button>◉<span>Live</span></button><button>▥<span>Stats</span></button><button>♛<span>Ranks</span></button><button id="mobileSettingsBtn">⚙<span>Settings</span></button></nav>
+  <div class="toast" id="toast">Picks locked. Results will update live.</div>
+</body>
+</html>
