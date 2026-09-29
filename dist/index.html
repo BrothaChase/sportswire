@@ -88,16 +88,23 @@
     .confidence { padding: 11px 15px; display: flex; align-items: center; gap: 9px; color: var(--muted); font-size: .68rem; }
     .confidence-bar { flex: 1; height: 4px; border-radius: 5px; background: rgba(255,255,255,.08); overflow: hidden; }
     .confidence-bar i { display: block; height: 100%; background: var(--blue); }
-    .matchups { display: grid; gap: 10px; }
-    .matchup { display: grid; grid-template-columns: 100px 1fr 90px 96px; gap: 14px; align-items: center; background: var(--panel); border: 1px solid var(--line); border-radius: 13px; padding: 13px 15px; }
-    .match-time { color: var(--muted); font-size: .73rem; }
-    .match-time b { display: block; margin-top: 4px; color: var(--text); font-size: .75rem; }
-    .match-team { font-size: .84rem; font-weight: 650; line-height: 1.65; }
-    .match-team span { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: rgba(255,255,255,.07); margin-right: 8px; font-size: .64rem; }
-    .edge { text-align: right; }
-    .edge small { display: block; color: var(--muted); font-size: .65rem; }
-    .edge b { color: var(--acid); font: 800 1.08rem Barlow Condensed, sans-serif; }
-    .analyze-btn { border: 1px solid var(--line); background: var(--panel-2); color: var(--text); border-radius: 8px; padding: 9px 10px; cursor: pointer; font-size: .72rem; font-weight: 700; }
+    .slate-actions { display: flex; gap: 7px; }
+    .slate-actions button { width: 34px; height: 34px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; background: var(--panel); color: var(--text); font-size: 1rem; }
+    .slate-actions button:hover { border-color: var(--acid); color: var(--acid); }
+    .matchups { display: flex; gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 1px 1px 8px; }
+    .matchups::-webkit-scrollbar { display: none; }
+    .matchup { flex: 0 0 218px; scroll-snap-align: start; background: var(--panel); border: 1px solid var(--line); border-radius: 13px; padding: 11px 12px; transition: .2s ease; }
+    .matchup:hover { border-color: rgba(208,164,44,.28); }
+    .match-time { display: flex; justify-content: space-between; gap: 8px; color: var(--muted); font-size: .65rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
+    .match-time b { color: var(--acid); font-size: .63rem; }
+    .match-team { margin-top: 9px; font-size: .78rem; font-weight: 650; line-height: 1.95; }
+    .match-team div { display: flex; align-items: center; }
+    .match-team span { display: inline-grid; place-items: center; width: 23px; height: 23px; border-radius: 50%; background: rgba(255,255,255,.07); margin-right: 8px; font-size: .55rem; color: #c8c7c2; }
+    .match-bottom { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); }
+    .edge { display: flex; align-items: baseline; gap: 5px; }
+    .edge small { color: var(--muted); font-size: .6rem; }
+    .edge b { color: var(--acid); font: 800 .95rem Barlow Condensed, sans-serif; }
+    .analyze-btn { border: 0; background: transparent; color: var(--text); padding: 5px 0; cursor: pointer; font-size: .65rem; font-weight: 700; }
     .analyze-btn:hover { border-color: var(--acid); color: var(--acid); }
     .rail { position: sticky; top: 0; height: 100vh; overflow: auto; border-left: 1px solid var(--line); background: #0c0c0d; padding: 23px 19px; }
     .rail-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 19px; }
@@ -157,8 +164,7 @@
       .topbar { gap: 8px; }
       .market-grid { grid-template-columns: 1fr; }
       .market-card:last-child { grid-column: auto; }
-      .matchup { grid-template-columns: 68px 1fr 65px; gap: 8px; }
-      .analyze-btn { display: none; }
+      .matchup { flex-basis: 205px; }
       .hero h1 { font-size: 2.75rem; }
       .hero-copy { max-width: 290px; }
     }
@@ -204,6 +210,9 @@
         </div>
       </section>
 
+      <div class="section-head"><div><h2 id="slateTitle">Tonight's slate</h2><p id="slateSubtitle">Upcoming games across your favorite leagues.</p></div><div class="slate-actions"><button id="slatePrev" aria-label="Previous games">‹</button><button id="slateNext" aria-label="Next games">›</button></div></div>
+      <section class="matchups" id="matchups" aria-live="polite"></section>
+
       <div class="section-head"><div><h2>Trending picks</h2><p>Build a card with the calls you believe in.</p></div><button id="clearPicks">Clear card</button></div>
       <section class="market-grid" id="marketGrid">
         <article class="market-card" data-question="Who finishes with more passing yards?">
@@ -226,12 +235,6 @@
         </article>
       </section>
 
-      <div class="section-head"><div><h2>Tonight's slate</h2><p>Matchups ranked by analytical interest.</p></div><button>View all</button></div>
-      <section class="matchups">
-        <article class="matchup"><div class="match-time">7:30 PM<b>NBA · TNT</b></div><div class="match-team"><div><span>BOS</span>Celtics</div><div><span>NYK</span>Knicks</div></div><div class="edge"><small>IQ edge</small><b>8.4</b></div><button class="analyze-btn">Analyze</button></article>
-        <article class="matchup"><div class="match-time">8:15 PM<b>NFL · Prime</b></div><div class="match-team"><div><span>BUF</span>Bills</div><div><span>BAL</span>Ravens</div></div><div class="edge"><small>IQ edge</small><b>7.8</b></div><button class="analyze-btn">Analyze</button></article>
-        <article class="matchup"><div class="match-time">9:00 PM<b>NCAAF · ESPN</b></div><div class="match-team"><div><span>ALA</span>Alabama</div><div><span>UGA</span>Georgia</div></div><div class="edge"><small>IQ edge</small><b>9.1</b></div><button class="analyze-btn">Analyze</button></article>
-      </section>
     </main>
 
     <aside class="rail">
@@ -245,6 +248,46 @@
   <nav class="mobile-nav"><button class="active">⌂<span>Lobby</span></button><button>◉<span>Live</span></button><button>▥<span>Stats</span></button><button>♛<span>Ranks</span></button></nav>
   <div class="toast" id="toast">Picks locked. Results will update live.</div>
   <script>
+    const scheduleData = {
+      'For You': [
+        { day: 'Tonight · 7:30 PM', meta: 'NBA · TNT', a: ['BOS', 'Celtics'], b: ['NYK', 'Knicks'], edge: '8.4' },
+        { day: 'Tonight · 8:15 PM', meta: 'NFL · Prime', a: ['BUF', 'Bills'], b: ['BAL', 'Ravens'], edge: '7.8' },
+        { day: 'Sat · 3:30 PM', meta: 'NCAAF · ESPN', a: ['ALA', 'Alabama'], b: ['UGA', 'Georgia'], edge: '9.1' },
+        { day: 'Sun · 4:25 PM', meta: 'NFL · FOX', a: ['SF', '49ers'], b: ['GB', 'Packers'], edge: '8.7' }
+      ],
+      NFL: [
+        { day: 'Thu · 8:15 PM', meta: 'NFL · Prime', a: ['BUF', 'Bills'], b: ['BAL', 'Ravens'], edge: '7.8' },
+        { day: 'Sun · 1:00 PM', meta: 'NFL · CBS', a: ['KC', 'Chiefs'], b: ['CIN', 'Bengals'], edge: '9.3' },
+        { day: 'Sun · 4:25 PM', meta: 'NFL · FOX', a: ['SF', '49ers'], b: ['GB', 'Packers'], edge: '8.7' },
+        { day: 'Mon · 8:15 PM', meta: 'NFL · ESPN', a: ['PHI', 'Eagles'], b: ['DAL', 'Cowboys'], edge: '9.0' }
+      ],
+      NBA: [
+        { day: 'Tonight · 7:30 PM', meta: 'NBA · TNT', a: ['BOS', 'Celtics'], b: ['NYK', 'Knicks'], edge: '8.4' },
+        { day: 'Tonight · 10:00 PM', meta: 'NBA · ESPN', a: ['LAL', 'Lakers'], b: ['GSW', 'Warriors'], edge: '9.2' },
+        { day: 'Fri · 8:00 PM', meta: 'NBA · LP', a: ['DEN', 'Nuggets'], b: ['OKC', 'Thunder'], edge: '8.8' },
+        { day: 'Sun · 6:00 PM', meta: 'NBA · ESPN', a: ['MIL', 'Bucks'], b: ['MIA', 'Heat'], edge: '7.6' }
+      ],
+      NCAAF: [
+        { day: 'Sat · 12:00 PM', meta: 'NCAAF · ABC', a: ['TEX', 'Texas'], b: ['OU', 'Oklahoma'], edge: '8.9' },
+        { day: 'Sat · 3:30 PM', meta: 'NCAAF · ESPN', a: ['ALA', 'Alabama'], b: ['UGA', 'Georgia'], edge: '9.1' },
+        { day: 'Sat · 7:30 PM', meta: 'NCAAF · NBC', a: ['OSU', 'Ohio State'], b: ['MICH', 'Michigan'], edge: '9.5' },
+        { day: 'Sat · 8:00 PM', meta: 'NCAAF · FOX', a: ['ORE', 'Oregon'], b: ['PSU', 'Penn State'], edge: '8.3' }
+      ],
+      MLB: [
+        { day: 'Tonight · 7:05 PM', meta: 'MLB · YES', a: ['BOS', 'Red Sox'], b: ['NYY', 'Yankees'], edge: '8.6' },
+        { day: 'Tonight · 8:10 PM', meta: 'MLB · TV+', a: ['CHC', 'Cubs'], b: ['STL', 'Cardinals'], edge: '7.7' },
+        { day: 'Sat · 4:10 PM', meta: 'MLB · FOX', a: ['LAD', 'Dodgers'], b: ['SD', 'Padres'], edge: '9.0' },
+        { day: 'Sun · 1:35 PM', meta: 'MLB · ESPN+', a: ['ATL', 'Braves'], b: ['PHI', 'Phillies'], edge: '8.2' }
+      ],
+      Soccer: [
+        { day: 'Sat · 7:30 AM', meta: 'EPL · Peacock', a: ['MCI', 'Man City'], b: ['ARS', 'Arsenal'], edge: '9.4' },
+        { day: 'Sat · 12:30 PM', meta: 'EPL · NBC', a: ['LIV', 'Liverpool'], b: ['CHE', 'Chelsea'], edge: '8.8' },
+        { day: 'Sun · 11:30 AM', meta: 'EPL · Peacock', a: ['TOT', 'Tottenham'], b: ['NEW', 'Newcastle'], edge: '7.9' },
+        { day: 'Wed · 3:00 PM', meta: 'UCL · Para+', a: ['RMA', 'Real Madrid'], b: ['BAY', 'Bayern'], edge: '9.6' }
+      ]
+    };
+    const matchups = document.getElementById('matchups');
+
     const picks = new Map();
     const slip = document.getElementById('slip');
     const count = document.getElementById('pickCount');
@@ -252,6 +295,21 @@
     const boost = document.getElementById('boostValue');
     const lock = document.getElementById('lockBtn');
     const toast = document.getElementById('toast');
+
+    function notify(message) {
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => { toast.classList.remove('show'); toast.textContent = 'Picks locked. Results will update live.'; }, 2200);
+    }
+
+    function renderSchedule(league) {
+      const games = scheduleData[league] || scheduleData['For You'];
+      document.getElementById('slateTitle').textContent = league === 'For You' ? "Tonight's slate" : `${league} slate`;
+      document.getElementById('slateSubtitle').textContent = league === 'For You' ? 'Upcoming games across your favorite leagues.' : `Today and upcoming ${league} games this week.`;
+      matchups.innerHTML = games.map(game => `<article class="matchup"><div class="match-time"><span>${game.day}</span><b>${game.meta}</b></div><div class="match-team"><div><span>${game.a[0]}</span>${game.a[1]}</div><div><span>${game.b[0]}</span>${game.b[1]}</div></div><div class="match-bottom"><div class="edge"><small>Analysis</small><b>${game.edge}</b></div><button class="analyze-btn">View stats</button></div></article>`).join('');
+      matchups.scrollTo({ left: 0, behavior: 'smooth' });
+      matchups.querySelectorAll('.analyze-btn').forEach(btn => btn.addEventListener('click', () => notify('Matchup analysis added to your feed.')));
+    }
 
     function renderSlip() {
       count.textContent = `${picks.size} PICK${picks.size === 1 ? '' : 'S'}`;
@@ -280,11 +338,13 @@
       }));
     });
     document.getElementById('clearPicks').addEventListener('click', () => { picks.clear(); document.querySelectorAll('.pick').forEach(p => p.classList.remove('selected')); renderSlip(); });
-    lock.addEventListener('click', () => { toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2600); });
+    lock.addEventListener('click', () => notify('Picks locked. Results will update live.'));
     document.getElementById('playLive').addEventListener('click', () => { document.getElementById('marketGrid').scrollIntoView({ behavior: 'smooth', block: 'center' }); });
-    document.querySelectorAll('.league-tab').forEach(tab => tab.addEventListener('click', () => { document.querySelectorAll('.league-tab').forEach(t => t.classList.remove('active')); tab.classList.add('active'); }));
+    document.querySelectorAll('.league-tab').forEach(tab => tab.addEventListener('click', () => { document.querySelectorAll('.league-tab').forEach(t => t.classList.remove('active')); tab.classList.add('active'); renderSchedule(tab.textContent.trim()); }));
     document.querySelectorAll('.nav-btn').forEach(btn => btn.addEventListener('click', () => { document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }));
-    document.querySelectorAll('.analyze-btn').forEach(btn => btn.addEventListener('click', () => { toast.textContent = 'Matchup analysis added to your feed.'; toast.classList.add('show'); setTimeout(() => { toast.classList.remove('show'); toast.textContent = 'Picks locked. Results will update live.'; }, 2200); }));
+    document.getElementById('slatePrev').addEventListener('click', () => matchups.scrollBy({ left: -230, behavior: 'smooth' }));
+    document.getElementById('slateNext').addEventListener('click', () => matchups.scrollBy({ left: 230, behavior: 'smooth' }));
+    renderSchedule('For You');
   </script>
 </body>
 </html>
