@@ -1,0 +1,10 @@
+{
+  "name": "sportswire-web",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SportsWire sports stats, trivia, and social competition web app.",
+  "scripts": {
+    "preview": "python3 -m http.server 4173 --directory public",
+    "build": "node -e \"const fs=require('fs');fs.rmSync('dist',{recursive:true,force:true});fs.cpSync('public','dist',{recursive:true})\""
+  }
+}
