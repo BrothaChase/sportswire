@@ -20,18 +20,24 @@
       --acid-2: #a87b12;
       --blue: #d0a42c;
       --gold: #d0a42c;
+      --accent-rgb: 208,164,44;
+      --accent-hover: #e1bb51;
+      --avatar-start: #4a3b16;
+      --hero-mid: #1a1916;
+      --hero-end: #27220f;
+      --metric-start: #72550e;
       --red: #ff5c68;
       --shadow: 0 22px 70px rgba(0,0,0,.34);
     }
     * { box-sizing: border-box; }
     html { background: var(--bg); color-scheme: dark; }
-    body { margin: 0; color: var(--text); background: radial-gradient(circle at 60% -20%, rgba(208,164,44,.075), transparent 35%), var(--bg); font-family: Inter, system-ui, sans-serif; min-height: 100vh; }
+    body { margin: 0; color: var(--text); background: radial-gradient(circle at 60% -20%, rgba(var(--accent-rgb),.075), transparent 35%), var(--bg); font-family: Inter, system-ui, sans-serif; min-height: 100vh; }
     button { font: inherit; }
     button, [role="button"] { -webkit-tap-highlight-color: transparent; }
     .shell { min-height: 100vh; display: grid; grid-template-columns: 238px minmax(0,1fr) 330px; }
     .sidebar { position: sticky; top: 0; height: 100vh; padding: 24px 18px; border-right: 1px solid var(--line); background: rgba(8,8,8,.96); display: flex; flex-direction: column; z-index: 5; }
     .brand { display: flex; align-items: center; gap: 11px; padding: 0 9px 28px; }
-    .brand-mark { width: 38px; height: 38px; border-radius: 12px; background: var(--acid); display: grid; place-items: center; box-shadow: 0 0 28px rgba(208,164,44,.16); }
+    .brand-mark { width: 38px; height: 38px; border-radius: 12px; background: var(--acid); display: grid; place-items: center; box-shadow: 0 0 28px rgba(var(--accent-rgb),.16); }
     .brand-mark svg { width: 24px; color: #100d05; }
     .brand-name { font: 800 1.45rem/1 Barlow Condensed, sans-serif; letter-spacing: .06em; text-transform: uppercase; }
     .brand-name small { display: block; margin-top: 4px; font: 600 .65rem/1 Inter, sans-serif; color: var(--muted); letter-spacing: .18em; }
@@ -39,9 +45,9 @@
     .nav { display: grid; gap: 5px; }
     .nav-btn { border: 0; background: transparent; color: #9ca6b2; display: flex; align-items: center; gap: 13px; padding: 12px 13px; border-radius: 11px; cursor: pointer; text-align: left; font-weight: 600; }
     .nav-btn svg { width: 19px; height: 19px; }
-    .nav-btn.active { background: linear-gradient(90deg, rgba(208,164,44,.15), rgba(208,164,44,.025)); color: var(--acid); box-shadow: inset 3px 0 var(--acid); }
+    .nav-btn.active { background: linear-gradient(90deg, rgba(var(--accent-rgb),.15), rgba(var(--accent-rgb),.025)); color: var(--acid); box-shadow: inset 3px 0 var(--acid); }
     .nav-btn:hover { color: var(--text); background-color: rgba(255,255,255,.04); }
-    .season-pass { margin-top: auto; border: 1px solid rgba(208,164,44,.24); border-radius: 14px; padding: 15px; background: linear-gradient(145deg, rgba(208,164,44,.1), rgba(208,164,44,.025)); }
+    .season-pass { margin-top: auto; border: 1px solid rgba(var(--accent-rgb),.24); border-radius: 14px; padding: 15px; background: linear-gradient(145deg, rgba(var(--accent-rgb),.1), rgba(var(--accent-rgb),.025)); }
     .season-pass strong { display: block; font: 700 1.05rem Barlow Condensed, sans-serif; letter-spacing: .06em; text-transform: uppercase; }
     .season-pass p { margin: 6px 0 12px; color: var(--muted); font-size: .74rem; line-height: 1.45; }
     .progress { height: 6px; background: rgba(255,255,255,.08); border-radius: 99px; overflow: hidden; }
@@ -53,17 +59,17 @@
     .league-tab.active { background: var(--text); color: #101010; }
     .profile { display: flex; align-items: center; gap: 10px; }
     .streak { display: flex; align-items: center; gap: 6px; color: var(--gold); font-weight: 700; font-size: .82rem; white-space: nowrap; }
-    .avatar { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 50%; background: linear-gradient(135deg, #4a3b16, var(--acid)); color: #0e0c07; font-size: .75rem; font-weight: 800; border: 2px solid rgba(255,255,255,.15); }
-    .hero { position: relative; overflow: hidden; min-height: 245px; margin-top: 24px; border-radius: 20px; border: 1px solid rgba(208,164,44,.14); background: linear-gradient(110deg, #121212 0%, #1a1916 54%, #27220f 100%); padding: 27px 31px; box-shadow: var(--shadow); }
-    .hero::after { content: ""; position: absolute; width: 360px; height: 360px; border: 58px solid rgba(208,164,44,.09); border-radius: 50%; right: -120px; top: -135px; }
+    .avatar { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 50%; background: linear-gradient(135deg, var(--avatar-start), var(--acid)); color: #0e0c07; font-size: .75rem; font-weight: 800; border: 2px solid rgba(255,255,255,.15); }
+    .hero { position: relative; overflow: hidden; min-height: 245px; margin-top: 24px; border-radius: 20px; border: 1px solid rgba(var(--accent-rgb),.14); background: linear-gradient(110deg, #121212 0%, var(--hero-mid) 54%, var(--hero-end) 100%); padding: 27px 31px; box-shadow: var(--shadow); }
+    .hero::after { content: ""; position: absolute; width: 360px; height: 360px; border: 58px solid rgba(var(--accent-rgb),.09); border-radius: 50%; right: -120px; top: -135px; }
     .hero-grid { position: absolute; inset: 0; opacity: .2; background-image: linear-gradient(rgba(255,255,255,.09) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.09) 1px, transparent 1px); background-size: 36px 36px; mask-image: linear-gradient(90deg, transparent, black); }
     .live-pill { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 7px; padding: 6px 9px; border-radius: 6px; background: rgba(8,8,8,.68); font-size: .7rem; font-weight: 800; letter-spacing: .12em; }
     .live-pill i { width: 7px; height: 7px; border-radius: 50%; background: var(--red); box-shadow: 0 0 0 4px rgba(255,92,104,.15); }
     .hero h1 { position: relative; z-index: 1; margin: 17px 0 5px; max-width: 560px; font: 800 clamp(2.5rem, 5vw, 4.1rem)/.88 Barlow Condensed, sans-serif; text-transform: uppercase; letter-spacing: -.02em; }
     .hero h1 span { color: var(--acid); }
     .hero-copy { position: relative; z-index: 1; margin: 11px 0 21px; color: #b7c1cc; font-size: .88rem; }
-    .primary-btn { position: relative; z-index: 1; border: 0; border-radius: 10px; background: var(--acid); color: #100d05; padding: 12px 18px; font-weight: 800; cursor: pointer; box-shadow: 0 8px 26px rgba(208,164,44,.16); }
-    .primary-btn:hover { background: #e1bb51; transform: translateY(-1px); }
+    .primary-btn { position: relative; z-index: 1; border: 0; border-radius: 10px; background: var(--acid); color: #100d05; padding: 12px 18px; font-weight: 800; cursor: pointer; box-shadow: 0 8px 26px rgba(var(--accent-rgb),.16); }
+    .primary-btn:hover { background: var(--accent-hover); transform: translateY(-1px); }
     .hero-score { position: absolute; z-index: 1; right: 33px; bottom: 28px; display: flex; align-items: center; gap: 19px; }
     .team { width: 72px; text-align: center; font: 700 .82rem Barlow Condensed, sans-serif; text-transform: uppercase; letter-spacing: .06em; }
     .team-logo { margin: 0 auto 8px; width: 58px; height: 58px; display: grid; place-items: center; border-radius: 50%; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.13); font-size: 1.7rem; }
@@ -76,7 +82,7 @@
     .section-head button { border: 0; background: none; color: var(--acid); font-size: .78rem; font-weight: 700; cursor: pointer; }
     .market-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 13px; }
     .market-card { border: 1px solid var(--line); background: var(--panel); border-radius: 15px; overflow: hidden; transition: .2s ease; }
-    .market-card:hover { transform: translateY(-2px); border-color: rgba(208,164,44,.3); }
+    .market-card:hover { transform: translateY(-2px); border-color: rgba(var(--accent-rgb),.3); }
     .market-top { padding: 14px 15px 10px; display: flex; justify-content: space-between; gap: 10px; }
     .market-top span { color: var(--muted); font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
     .market-top b { font-size: .7rem; color: var(--blue); }
@@ -94,7 +100,7 @@
     .matchups { display: flex; gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 1px 1px 8px; }
     .matchups::-webkit-scrollbar { display: none; }
     .matchup { flex: 0 0 218px; scroll-snap-align: start; background: var(--panel); border: 1px solid var(--line); border-radius: 13px; padding: 11px 12px; transition: .2s ease; }
-    .matchup:hover { border-color: rgba(208,164,44,.28); }
+    .matchup:hover { border-color: rgba(var(--accent-rgb),.28); }
     .match-time { display: flex; justify-content: space-between; gap: 8px; color: var(--muted); font-size: .65rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
     .match-time b { color: var(--acid); font-size: .63rem; }
     .match-team { margin-top: 9px; font-size: .78rem; font-weight: 650; line-height: 1.95; }
@@ -118,7 +124,7 @@
     .slip-item h3 { margin: 8px 0 5px; font-size: .83rem; line-height: 1.35; }
     .slip-choice { color: var(--acid); font-size: .76rem; font-weight: 700; }
     .empty-slip { padding: 25px 18px; text-align: center; color: var(--muted); font-size: .78rem; line-height: 1.5; }
-    .empty-icon { width: 40px; height: 40px; margin: 0 auto 10px; border-radius: 12px; display: grid; place-items: center; background: rgba(208,164,44,.09); color: var(--acid); font-size: 1.2rem; }
+    .empty-icon { width: 40px; height: 40px; margin: 0 auto 10px; border-radius: 12px; display: grid; place-items: center; background: rgba(var(--accent-rgb),.09); color: var(--acid); font-size: 1.2rem; }
     .lock-box { margin-top: 12px; padding: 14px; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; }
     .lock-row { display: flex; justify-content: space-between; font-size: .73rem; color: var(--muted); }
     .lock-row b { color: var(--text); }
@@ -129,10 +135,27 @@
     .metric { display: grid; grid-template-columns: 42px 1fr auto; align-items: center; gap: 9px; margin: 11px 0; }
     .metric-label { font-size: .67rem; color: var(--muted); }
     .metric-track { height: 6px; border-radius: 8px; background: rgba(255,255,255,.08); overflow: hidden; }
-    .metric-track i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #72550e, var(--acid)); }
+    .metric-track i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--metric-start), var(--acid)); }
     .metric b { font-size: .7rem; }
     .toast { position: fixed; left: 50%; bottom: 25px; transform: translate(-50%, 120px); opacity: 0; z-index: 30; background: #eef4e7; color: #10150d; border-radius: 11px; padding: 12px 16px; font-size: .8rem; font-weight: 700; box-shadow: 0 14px 40px rgba(0,0,0,.35); transition: .28s ease; }
     .toast.show { transform: translate(-50%, 0); opacity: 1; }
+    .settings-dialog { width: min(560px, calc(100vw - 28px)); border: 1px solid var(--line); border-radius: 18px; padding: 0; color: var(--text); background: #101011; box-shadow: 0 30px 100px rgba(0,0,0,.65); }
+    .settings-dialog::backdrop { background: rgba(0,0,0,.72); backdrop-filter: blur(6px); }
+    .settings-head { display: flex; justify-content: space-between; align-items: center; padding: 20px 21px; border-bottom: 1px solid var(--line); }
+    .settings-head h2 { margin: 0; font: 800 1.45rem Barlow Condensed, sans-serif; text-transform: uppercase; letter-spacing: .05em; }
+    .settings-close { width: 34px; height: 34px; border: 1px solid var(--line); border-radius: 50%; background: var(--panel); color: var(--muted); cursor: pointer; font-size: 1.15rem; }
+    .settings-body { padding: 21px; }
+    .settings-body h3 { margin: 0; font-size: .92rem; }
+    .settings-body p { margin: 7px 0 18px; color: var(--muted); font-size: .78rem; line-height: 1.5; }
+    .theme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .theme-choice { position: relative; border: 1px solid var(--line); border-radius: 12px; padding: 12px; background: var(--panel); color: var(--text); text-align: left; cursor: pointer; }
+    .theme-choice:hover { border-color: rgba(var(--accent-rgb),.5); }
+    .theme-choice.selected { border-color: var(--acid); box-shadow: inset 0 0 0 1px var(--acid); }
+    .theme-choice.selected::after { content: '✓'; position: absolute; right: 10px; top: 9px; color: var(--acid); font-weight: 800; }
+    .theme-swatch { width: 34px; height: 34px; border-radius: 50%; margin-bottom: 10px; background: var(--swatch); box-shadow: 0 0 0 5px color-mix(in srgb, var(--swatch) 15%, transparent); }
+    .theme-choice strong { display: block; font-size: .78rem; }
+    .theme-choice small { display: block; margin-top: 3px; color: var(--muted); font-size: .64rem; }
+    .settings-note { margin-top: 18px; padding-top: 15px; border-top: 1px solid var(--line); color: var(--muted); font-size: .7rem; }
     .mobile-nav { display: none; }
     @media (max-width: 1180px) {
       .shell { grid-template-columns: 76px minmax(0,1fr) 310px; }
@@ -167,6 +190,7 @@
       .matchup { flex-basis: 205px; }
       .hero h1 { font-size: 2.75rem; }
       .hero-copy { max-width: 290px; }
+      .theme-grid { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
@@ -185,6 +209,7 @@
       <nav class="nav">
         <button class="nav-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c.7-5 3.3-7 8-7s7.3 2 8 7"/></svg><span>Profile</span></button>
         <button class="nav-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19h16M6 16l3-4 3 2 5-7 2 2"/></svg><span>Performance</span></button>
+        <button class="nav-btn" id="settingsBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-4V21a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H3v-4h.2a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7 7 4.2l.1.1A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-1.6v-.2h4V3a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2v4H21a1.7 1.7 0 0 0-1.6 1Z"/></svg><span>Settings</span></button>
       </nav>
       <div class="season-pass"><strong>Season 08</strong><p>1,420 XP until the Playmaker division.</p><div class="progress"><span></span></div></div>
     </aside>
@@ -245,9 +270,51 @@
     </aside>
   </div>
 
-  <nav class="mobile-nav"><button class="active">⌂<span>Lobby</span></button><button>◉<span>Live</span></button><button>▥<span>Stats</span></button><button>♛<span>Ranks</span></button></nav>
+  <dialog class="settings-dialog" id="settingsDialog">
+    <div class="settings-head"><h2>Appearance</h2><button class="settings-close" id="settingsClose" aria-label="Close settings">×</button></div>
+    <div class="settings-body">
+      <h3>Accent theme</h3>
+      <p>Choose the color used for active states, progress, highlights, and primary actions.</p>
+      <div class="theme-grid">
+        <button class="theme-choice" data-theme="green" style="--swatch:#b7ff3c"><span class="theme-swatch"></span><strong>Original Green</strong><small>Electric and energetic</small></button>
+        <button class="theme-choice" data-theme="gold" style="--swatch:#d0a42c"><span class="theme-swatch"></span><strong>Sportsbook Gold</strong><small>Current theme</small></button>
+        <button class="theme-choice" data-theme="orange" style="--swatch:#ff8a24"><span class="theme-swatch"></span><strong>Orange</strong><small>Warm and bold</small></button>
+        <button class="theme-choice" data-theme="red" style="--swatch:#ff4d5a"><span class="theme-swatch"></span><strong>Red</strong><small>Competitive intensity</small></button>
+        <button class="theme-choice" data-theme="purple" style="--swatch:#a970ff"><span class="theme-swatch"></span><strong>Purple</strong><small>Distinct and premium</small></button>
+        <button class="theme-choice" data-theme="blue" style="--swatch:#49b7ff"><span class="theme-swatch"></span><strong>Blue</strong><small>Clean and analytical</small></button>
+      </div>
+      <div class="settings-note">Your selection is saved on this device. Custom colors can be added later.</div>
+    </div>
+  </dialog>
+
+  <nav class="mobile-nav"><button class="active">⌂<span>Lobby</span></button><button>◉<span>Live</span></button><button>▥<span>Stats</span></button><button>♛<span>Ranks</span></button><button id="mobileSettingsBtn">⚙<span>Settings</span></button></nav>
   <div class="toast" id="toast">Picks locked. Results will update live.</div>
   <script>
+    const themes = {
+      green:  { accent:'#b7ff3c', accent2:'#83d900', rgb:'183,255,60', hover:'#cbff72', avatar:'#31450f', heroMid:'#172d37', heroEnd:'#1d3924', metric:'#3f6500' },
+      gold:   { accent:'#d0a42c', accent2:'#a87b12', rgb:'208,164,44', hover:'#e1bb51', avatar:'#4a3b16', heroMid:'#1a1916', heroEnd:'#27220f', metric:'#72550e' },
+      orange: { accent:'#ff8a24', accent2:'#d76400', rgb:'255,138,36', hover:'#ffad66', avatar:'#5c2d08', heroMid:'#211712', heroEnd:'#3c200b', metric:'#803d07' },
+      red:    { accent:'#ff4d5a', accent2:'#d92635', rgb:'255,77,90', hover:'#ff7a84', avatar:'#5b1820', heroMid:'#231416', heroEnd:'#3d1218', metric:'#7d1720' },
+      purple: { accent:'#a970ff', accent2:'#7b42d4', rgb:'169,112,255', hover:'#c59dff', avatar:'#37205d', heroMid:'#1d1727', heroEnd:'#2b1746', metric:'#57308d' },
+      blue:   { accent:'#49b7ff', accent2:'#138bd6', rgb:'73,183,255', hover:'#82ceff', avatar:'#163f5d', heroMid:'#172536', heroEnd:'#12334d', metric:'#15587e' }
+    };
+    function applyTheme(name, save = true) {
+      const theme = themes[name] || themes.gold;
+      const root = document.documentElement.style;
+      root.setProperty('--acid', theme.accent);
+      root.setProperty('--acid-2', theme.accent2);
+      root.setProperty('--blue', theme.accent);
+      root.setProperty('--gold', theme.accent);
+      root.setProperty('--accent-rgb', theme.rgb);
+      root.setProperty('--accent-hover', theme.hover);
+      root.setProperty('--avatar-start', theme.avatar);
+      root.setProperty('--hero-mid', theme.heroMid);
+      root.setProperty('--hero-end', theme.heroEnd);
+      root.setProperty('--metric-start', theme.metric);
+      document.querySelectorAll('.theme-choice').forEach(button => button.classList.toggle('selected', button.dataset.theme === name));
+      if (save) localStorage.setItem('handshake-theme', name);
+    }
+
     const scheduleData = {
       'For You': [
         { day: 'Tonight · 7:30 PM', meta: 'NBA · TNT', a: ['BOS', 'Celtics'], b: ['NYK', 'Knicks'], edge: '8.4' },
@@ -295,6 +362,7 @@
     const boost = document.getElementById('boostValue');
     const lock = document.getElementById('lockBtn');
     const toast = document.getElementById('toast');
+    const settingsDialog = document.getElementById('settingsDialog');
 
     function notify(message) {
       toast.textContent = message;
@@ -344,6 +412,12 @@
     document.querySelectorAll('.nav-btn').forEach(btn => btn.addEventListener('click', () => { document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }));
     document.getElementById('slatePrev').addEventListener('click', () => matchups.scrollBy({ left: -230, behavior: 'smooth' }));
     document.getElementById('slateNext').addEventListener('click', () => matchups.scrollBy({ left: 230, behavior: 'smooth' }));
+    document.getElementById('settingsBtn').addEventListener('click', () => settingsDialog.showModal());
+    document.getElementById('mobileSettingsBtn').addEventListener('click', () => settingsDialog.showModal());
+    document.getElementById('settingsClose').addEventListener('click', () => settingsDialog.close());
+    settingsDialog.addEventListener('click', event => { if (event.target === settingsDialog) settingsDialog.close(); });
+    document.querySelectorAll('.theme-choice').forEach(button => button.addEventListener('click', () => applyTheme(button.dataset.theme)));
+    applyTheme(localStorage.getItem('handshake-theme') || 'gold', false);
     renderSchedule('For You');
   </script>
 </body>
