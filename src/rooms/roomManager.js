@@ -2,7 +2,7 @@ import { makeCode } from "./roomCode.js";
 
 const rooms = new Map(); // A map to store all the rooms with their codes as keys
 
-function createRoom() {
+export function createRoom() {
   let code = makeCode(); // Ex: ABC123
 
   while (rooms.has(code)) {
