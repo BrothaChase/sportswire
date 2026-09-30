@@ -139,22 +139,27 @@ document.querySelectorAll(".format-option").forEach((button) => {
 
 document
   .getElementById("createRoomForm")
-  .addEventListener("submit", (event) => {
+  .addEventListener("submit", async (event) => {
     event.preventDefault();
     const name = document.getElementById("roomName").value.trim();
     const category = document.getElementById("roomCategory").value;
     const questions = document.getElementById("questionCount").value;
     if (!name) return;
-    const code = makeCode();
+    const response = await fetch("/api/rooms", {
+      method: "POST",
+    });
+
+    const room = await response.json();
+
     renderPreview({
-      code,
+      code: room.code,
       name,
       category,
       detail: `${questions} · ${selectedFormat}`,
       host: "Chase",
       action: "Host room",
     });
-    notify(`Room ${code} created for preview.`);
+    notify(`Room ${room.code} created for preview.`);
     preview.scrollIntoView({ behavior: "smooth", block: "nearest" });
   });
 
