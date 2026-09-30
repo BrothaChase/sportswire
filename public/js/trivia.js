@@ -92,13 +92,13 @@ function notify(message) {
   window.setTimeout(() => toast.classList.remove("show"), 2300);
 }
 
-function makeCode() {
+/* function makeCode() {
   const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ123456789";
   return Array.from(
     { length: 6 },
     () => chars[Math.floor(Math.random() * chars.length)],
   ).join("");
-}
+} */
 
 function renderPreview({ code, name, category, detail, host, action }) {
   roomStatus.textContent = action === "Host room" ? "CREATED" : "FOUND";
