@@ -166,27 +166,52 @@ roomCode.addEventListener("input", () => {
     "Codes use six letters or numbers.";
 });
 
-document.getElementById("joinRoomForm").addEventListener("submit", (event) => {
-  event.preventDefault();
-  const code = roomCode.value.trim();
-  const displayName = document.getElementById("displayName").value.trim();
-  if (code.length !== 6) {
-    roomCode.classList.add("input-error");
-    document.getElementById("codeHelp").textContent =
-      "Enter all six characters to find the room.";
-    roomCode.focus();
-    return;
-  }
-  renderPreview({
-    code,
-    name: "SportsWire Trivia Room",
-    category: "Mixed sports",
-    detail: "10 questions · Classic",
-    host: displayName || "Player",
-    action: "Enter preview",
+document
+  .getElementById("joinRoomForm")
+  .addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const code = roomCode.value.trim();
+    const displayName = document.getElementById("displayName").value.trim();
+    if (code.length !== 6) {
+      roomCode.classList.add("input-error");
+      document.getElementById("codeHelp").textContent =
+        "Enter all six characters to find the room.";
+      roomCode.focus();
+      return;
+    }
+    // Fetch the room details from the server
+    const response = await fetch(`/api/rooms/${code}`);
+    const room = await response.json();
+
+    // error handling
+    if (!response.ok) {
+      roomCode.classList.add("input-error");
+      document.getElementById("codeHelp").textContent =
+        room.error || "Unable to find that room.";
+      notify(`Room ${code} was not found.`);
+      return;
+    }
+
+    if (response.ok) {
+      roomCode.classList.add("input-success");
+      document.getElementById("codeHelp").textContent = "Room found.";
+      notify(`Room ${code} was found.`);
+      return;
+    }
+
+    // test fetching room details from the server
+    console.log(response.status, room);
+
+    renderPreview({
+      code,
+      name: "SportsWire Trivia Room",
+      category: "Mixed sports",
+      detail: "10 questions · Classic",
+      host: displayName || "Player",
+      action: "Enter preview",
+    });
+    notify(`Room ${code} found in the frontend demo.`);
   });
-  notify(`Room ${code} found in the frontend demo.`);
-});
 
 document.querySelectorAll(".open-room button").forEach((button) => {
   button.addEventListener("click", () => {

@@ -17,6 +17,7 @@
   --hero-end: #27220f;
   --metric-start: #72550e;
   --red: #ff5c68;
+  --green: #35d07f;
   --shadow: 0 22px 70px rgba(0, 0, 0, 0.34);
 }
 * {
@@ -916,7 +917,12 @@ button,
   gap: 32px;
   border: 1px solid rgba(var(--accent-rgb), 0.18);
   border-radius: 20px;
-  background: linear-gradient(115deg, #121212 0%, var(--hero-mid) 57%, var(--hero-end) 100%);
+  background: linear-gradient(
+    115deg,
+    #121212 0%,
+    var(--hero-mid) 57%,
+    var(--hero-end) 100%
+  );
   box-shadow: var(--shadow);
 }
 .trivia-hero::after {
@@ -925,14 +931,18 @@ button,
   right: 25%;
   top: -95px;
   color: rgba(var(--accent-rgb), 0.065);
-  font: 800 24rem/1 Barlow Condensed, sans-serif;
+  font:
+    800 24rem/1 Barlow Condensed,
+    sans-serif;
   transform: rotate(8deg);
 }
 .trivia-hero-grid {
   position: absolute;
   inset: 0;
   opacity: 0.16;
-  background-image: linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px);
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
   background-size: 38px 38px;
   mask-image: linear-gradient(90deg, transparent 10%, #000 80%);
 }
@@ -961,7 +971,9 @@ button,
 }
 .trivia-copy h1 {
   margin: 15px 0 10px;
-  font: 800 clamp(3rem, 5vw, 4.6rem)/0.86 Barlow Condensed, sans-serif;
+  font:
+    800 clamp(3rem, 5vw, 4.6rem)/0.86 Barlow Condensed,
+    sans-serif;
   letter-spacing: -0.025em;
   text-transform: uppercase;
 }
@@ -977,10 +989,10 @@ button,
 }
 .trivia-stat-stack {
   min-width: 172px;
-  border: 1px solid rgba(255,255,255,.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 14px;
   overflow: hidden;
-  background: rgba(9,9,9,.58);
+  background: rgba(9, 9, 9, 0.58);
   backdrop-filter: blur(9px);
 }
 .trivia-stat-stack div {
@@ -996,7 +1008,9 @@ button,
 }
 .trivia-stat-stack b {
   color: var(--acid);
-  font: 800 1.35rem Barlow Condensed, sans-serif;
+  font:
+    800 1.35rem Barlow Condensed,
+    sans-serif;
 }
 .trivia-stat-stack span {
   margin-top: 2px;
@@ -1005,7 +1019,7 @@ button,
 }
 .room-actions-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(300px, .85fr);
+  grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
   gap: 14px;
   margin-top: 18px;
 }
@@ -1016,7 +1030,7 @@ button,
   background: var(--panel);
 }
 .room-action-card:hover {
-  border-color: rgba(var(--accent-rgb), .25);
+  border-color: rgba(var(--accent-rgb), 0.25);
 }
 .action-card-head {
   display: flex;
@@ -1037,21 +1051,23 @@ button,
 }
 .action-card-head span {
   color: var(--acid);
-  font-size: .64rem;
+  font-size: 0.64rem;
   font-weight: 800;
-  letter-spacing: .12em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 .action-card-head h2 {
   margin: 2px 0 0;
-  font: 800 1.55rem Barlow Condensed, sans-serif;
-  letter-spacing: .03em;
+  font:
+    800 1.55rem Barlow Condensed,
+    sans-serif;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
 }
 .action-copy {
   margin: 15px 0 18px;
   color: var(--muted);
-  font-size: .75rem;
+  font-size: 0.75rem;
   line-height: 1.55;
 }
 .room-form label,
@@ -1060,9 +1076,9 @@ button,
   display: grid;
   gap: 7px;
   color: #a6a7a9;
-  font-size: .68rem;
+  font-size: 0.68rem;
   font-weight: 700;
-  letter-spacing: .04em;
+  letter-spacing: 0.04em;
 }
 .room-form input,
 .room-form select,
@@ -1075,13 +1091,15 @@ button,
   background: #0d0d0e;
   color: var(--text);
   padding: 0 12px;
-  font: 600 .78rem Inter, sans-serif;
+  font:
+    600 0.78rem Inter,
+    sans-serif;
 }
 .room-form input:focus,
 .room-form select:focus,
 .join-form input:focus {
   border-color: var(--acid);
-  box-shadow: 0 0 0 3px rgba(var(--accent-rgb), .1);
+  box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.1);
 }
 .form-row {
   display: grid;
@@ -1115,17 +1133,17 @@ button,
   white-space: nowrap;
 }
 .format-option b {
-  font-size: .69rem;
+  font-size: 0.69rem;
 }
 .format-option small {
   margin-top: 4px;
   color: var(--muted);
-  font-size: .57rem;
+  font-size: 0.57rem;
 }
 .format-option:hover,
 .format-option.selected {
   border-color: var(--acid);
-  background: rgba(var(--accent-rgb), .08);
+  background: rgba(var(--accent-rgb), 0.08);
 }
 .format-option.selected b {
   color: var(--acid);
@@ -1161,17 +1179,26 @@ button,
 .join-form #roomCode {
   min-height: 59px;
   color: var(--acid);
-  font: 800 1.55rem Barlow Condensed, sans-serif;
-  letter-spacing: .25em;
+  font:
+    800 1.55rem Barlow Condensed,
+    sans-serif;
+  letter-spacing: 0.25em;
   text-align: center;
   text-transform: uppercase;
 }
 .join-form input.input-error {
   border-color: var(--red);
 }
+
+.join-form input.input-success {
+  border-color: var(--green);
+}
 .code-help {
   color: var(--muted);
-  font-size: .61rem;
+  font-size: 0.61rem;
+}
+.input-success + .code-help {
+  color: var(--green);
 }
 .input-error + .code-help {
   color: var(--red);
@@ -1191,7 +1218,7 @@ button,
   gap: 10px;
   margin: 16px 0 10px;
   color: #68686a;
-  font-size: .62rem;
+  font-size: 0.62rem;
   text-transform: uppercase;
 }
 .join-divider::before,
@@ -1209,43 +1236,43 @@ button,
   gap: 10px;
   border: 0;
   border-radius: 9px;
-  background: rgba(255,255,255,.035);
+  background: rgba(255, 255, 255, 0.035);
   color: var(--text);
   padding: 11px 12px;
   cursor: pointer;
   text-align: left;
 }
 .quick-match:hover {
-  background: rgba(var(--accent-rgb), .08);
+  background: rgba(var(--accent-rgb), 0.08);
 }
 .quick-match b,
 .quick-match small {
   display: block;
 }
 .quick-match b {
-  font-size: .72rem;
+  font-size: 0.72rem;
 }
 .quick-match small {
   margin-top: 2px;
   color: var(--muted);
-  font-size: .59rem;
+  font-size: 0.59rem;
 }
 .pulse-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
   background: #60e896;
-  box-shadow: 0 0 0 4px rgba(96,232,150,.1);
+  box-shadow: 0 0 0 4px rgba(96, 232, 150, 0.1);
 }
 .frontend-badge {
   color: var(--acid);
-  border: 1px solid rgba(var(--accent-rgb), .25);
+  border: 1px solid rgba(var(--accent-rgb), 0.25);
   border-radius: 99px;
   padding: 5px 9px;
-  font-size: .63rem;
+  font-size: 0.63rem;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: .07em;
+  letter-spacing: 0.07em;
 }
 .open-rooms {
   display: grid;
@@ -1267,25 +1294,27 @@ button,
   display: grid;
   place-items: center;
   border-radius: 50%;
-  background: rgba(var(--accent-rgb), .1);
+  background: rgba(var(--accent-rgb), 0.1);
   color: var(--acid);
-  font: 800 .73rem Barlow Condensed, sans-serif;
+  font:
+    800 0.73rem Barlow Condensed,
+    sans-serif;
 }
 .open-room span {
   color: var(--acid);
-  font-size: .56rem;
+  font-size: 0.56rem;
   font-weight: 800;
-  letter-spacing: .05em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 .open-room h3 {
   margin: 3px 0;
-  font-size: .78rem;
+  font-size: 0.78rem;
 }
 .open-room p {
   margin: 0;
   color: var(--muted);
-  font-size: .62rem;
+  font-size: 0.62rem;
 }
 .open-room button {
   border: 1px solid var(--line);
@@ -1294,7 +1323,7 @@ button,
   background: transparent;
   padding: 8px 10px;
   cursor: pointer;
-  font-size: .65rem;
+  font-size: 0.65rem;
   font-weight: 700;
 }
 .open-room button:hover {
@@ -1302,7 +1331,7 @@ button,
   border-color: var(--acid);
 }
 .trivia-rail .rail-head span {
-  background: rgba(var(--accent-rgb), .1);
+  background: rgba(var(--accent-rgb), 0.1);
   color: var(--acid);
 }
 .room-preview {
@@ -1324,23 +1353,27 @@ button,
   margin: 0 auto 12px;
   display: grid;
   place-items: center;
-  border: 1px solid rgba(var(--accent-rgb), .23);
+  border: 1px solid rgba(var(--accent-rgb), 0.23);
   border-radius: 14px;
   color: var(--acid);
-  background: rgba(var(--accent-rgb), .07);
-  font: 800 1.5rem Barlow Condensed, sans-serif;
+  background: rgba(var(--accent-rgb), 0.07);
+  font:
+    800 1.5rem Barlow Condensed,
+    sans-serif;
 }
 .preview-empty h3,
 .room-preview > h3 {
   margin: 0 0 6px;
-  font: 800 1.15rem Barlow Condensed, sans-serif;
+  font:
+    800 1.15rem Barlow Condensed,
+    sans-serif;
   text-transform: uppercase;
 }
 .preview-empty p {
   max-width: 220px;
   margin: 0;
   color: var(--muted);
-  font-size: .7rem;
+  font-size: 0.7rem;
   line-height: 1.5;
 }
 .preview-live {
@@ -1348,15 +1381,15 @@ button,
   align-items: center;
   gap: 8px;
   color: var(--muted);
-  font-size: .61rem;
+  font-size: 0.61rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: .07em;
+  letter-spacing: 0.07em;
 }
 .preview-code-label {
   margin-top: 17px;
   color: var(--muted);
-  font-size: .59rem;
+  font-size: 0.59rem;
   text-transform: uppercase;
 }
 .preview-code {
@@ -1368,12 +1401,16 @@ button,
   color: var(--acid);
   background: transparent;
   cursor: pointer;
-  font: 800 2rem Barlow Condensed, sans-serif;
-  letter-spacing: .12em;
+  font:
+    800 2rem Barlow Condensed,
+    sans-serif;
+  letter-spacing: 0.12em;
 }
 .preview-code small {
   color: var(--muted);
-  font: 500 .55rem Inter, sans-serif;
+  font:
+    500 0.55rem Inter,
+    sans-serif;
   letter-spacing: 0;
 }
 .room-preview > h3 {
@@ -1388,8 +1425,8 @@ button,
   border-radius: 99px;
   padding: 5px 8px;
   color: #b7b7ba;
-  background: rgba(255,255,255,.05);
-  font-size: .58rem;
+  background: rgba(255, 255, 255, 0.05);
+  font-size: 0.58rem;
 }
 .host-row {
   display: flex;
@@ -1405,7 +1442,7 @@ button,
   border-radius: 50%;
   color: #100d05;
   background: var(--acid);
-  font-size: .6rem;
+  font-size: 0.6rem;
   font-weight: 800;
 }
 .host-row small,
@@ -1414,10 +1451,10 @@ button,
 }
 .host-row small {
   color: var(--muted);
-  font-size: .54rem;
+  font-size: 0.54rem;
 }
 .host-row b {
-  font-size: .68rem;
+  font-size: 0.68rem;
 }
 .preview-action {
   margin-top: 15px;
@@ -1429,9 +1466,11 @@ button,
 }
 .how-it-works h3 {
   margin: 0 0 13px;
-  font: 800 1rem Barlow Condensed, sans-serif;
+  font:
+    800 1rem Barlow Condensed,
+    sans-serif;
   text-transform: uppercase;
-  letter-spacing: .05em;
+  letter-spacing: 0.05em;
 }
 .how-it-works ol {
   list-style: none;
@@ -1457,37 +1496,39 @@ button,
   place-items: center;
   border-radius: 8px;
   color: var(--acid);
-  background: rgba(var(--accent-rgb), .08);
-  font: 800 .65rem Barlow Condensed, sans-serif;
+  background: rgba(var(--accent-rgb), 0.08);
+  font:
+    800 0.65rem Barlow Condensed,
+    sans-serif;
 }
 .how-it-works b,
 .how-it-works span {
   display: block;
 }
 .how-it-works b {
-  font-size: .69rem;
+  font-size: 0.69rem;
 }
 .how-it-works span {
   margin-top: 3px;
   color: var(--muted);
-  font-size: .6rem;
+  font-size: 0.6rem;
 }
 .demo-note {
   margin-top: 18px;
   padding: 13px;
-  border: 1px solid rgba(var(--accent-rgb), .18);
+  border: 1px solid rgba(var(--accent-rgb), 0.18);
   border-radius: 11px;
-  background: rgba(var(--accent-rgb), .05);
+  background: rgba(var(--accent-rgb), 0.05);
 }
 .demo-note strong {
   color: var(--acid);
-  font-size: .66rem;
+  font-size: 0.66rem;
   text-transform: uppercase;
 }
 .demo-note p {
   margin: 5px 0 0;
   color: var(--muted);
-  font-size: .61rem;
+  font-size: 0.61rem;
   line-height: 1.45;
 }
 @media (max-width: 1180px) {

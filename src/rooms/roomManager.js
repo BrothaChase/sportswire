@@ -18,3 +18,7 @@ export function createRoom() {
 
   return room;
 }
+
+export function getRoom(code) {
+  return rooms.get(code);
+}
