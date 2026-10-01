@@ -161,7 +161,7 @@ roomCode.addEventListener("input", () => {
     .toUpperCase()
     .replace(/[^A-Z0-9]/g, "")
     .slice(0, 6);
-  roomCode.classList.remove("input-error", "input-success");
+  roomCode.classList.remove("input-error", "input-success"); // remove any previous input style
   document.getElementById("codeHelp").textContent =
     "Codes use six letters or numbers.";
 });
