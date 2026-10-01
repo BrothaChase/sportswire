@@ -59,10 +59,21 @@ const themes = {
     heroEnd: "#12334d",
     metric: "#15587e",
   },
+  analytics: {
+    accent: "#65d9e8",
+    accent2: "#2aaec0",
+    rgb: "101,217,232",
+    hover: "#8be5ef",
+    avatar: "#2a2a28",
+    heroMid: "#1b1b1a",
+    heroEnd: "#20201f",
+    metric: "#2b8998",
+  },
 };
 function applyTheme(name, save = true) {
   const theme = themes[name] || themes.gold;
   const root = document.documentElement.style;
+  document.documentElement.dataset.theme = themes[name] ? name : "gold";
   root.setProperty("--acid", theme.accent);
   root.setProperty("--acid-2", theme.accent2);
   root.setProperty("--blue", theme.accent);
@@ -293,8 +304,16 @@ function renderSchedule(league) {
       : `Today and upcoming ${league} games this week.`;
   matchups.innerHTML = games
     .map(
-      (game) =>
-        `<article class="matchup"><div class="match-time"><span>${game.day}</span><b>${game.meta}</b></div><div class="match-team"><div><span>${game.a[0]}</span>${game.a[1]}</div><div><span>${game.b[0]}</span>${game.b[1]}</div></div><div class="match-bottom"><div class="edge"><small>Analysis</small><b>${game.edge}</b></div><button class="analyze-btn">View stats</button></div></article>`,
+      (game) => {
+        const edge = Number(game.edge);
+        const signalClass =
+          edge >= 8.5
+            ? "signal-positive"
+            : edge < 8
+              ? "signal-negative"
+              : "signal-neutral";
+        return `<article class="matchup"><div class="match-time"><span>${game.day}</span><b>${game.meta}</b></div><div class="match-team"><div><span>${game.a[0]}</span>${game.a[1]}</div><div><span>${game.b[0]}</span>${game.b[1]}</div></div><div class="match-bottom"><div class="edge ${signalClass}"><small>Analysis</small><b>${game.edge}</b></div><button class="analyze-btn">View stats</button></div></article>`;
+      },
     )
     .join("");
   matchups.scrollTo({ left: 0, behavior: "smooth" });

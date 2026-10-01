@@ -59,11 +59,23 @@ const triviaThemes = {
     "#12334d",
     "#15587e",
   ],
+  analytics: [
+    "#65d9e8",
+    "#2aaec0",
+    "101,217,232",
+    "#8be5ef",
+    "#2a2a28",
+    "#1b1b1a",
+    "#20201f",
+    "#2b8998",
+  ],
 };
 
 function applySavedTheme() {
-  const values =
-    triviaThemes[localStorage.getItem("sportswire-theme")] || triviaThemes.gold;
+  const savedTheme = localStorage.getItem("sportswire-theme");
+  const themeName = triviaThemes[savedTheme] ? savedTheme : "gold";
+  const values = triviaThemes[themeName];
+  document.documentElement.dataset.theme = themeName;
   const properties = [
     "--acid",
     "--acid-2",

@@ -20,6 +20,95 @@
   --green: #35d07f;
   --shadow: 0 22px 70px rgba(0, 0, 0, 0.34);
 }
+:root[data-theme="analytics"] {
+  --bg: #141414;
+  --panel: #20201f;
+  --panel-2: #252524;
+  --line: rgba(231, 231, 227, 0.14);
+  --muted: #999994;
+  --text: #e7e7e3;
+  --green: #4fd17b;
+  --red: #f36a67;
+  --shadow: 0 20px 60px rgba(0, 0, 0, 0.28);
+}
+:root[data-theme="analytics"] .sidebar {
+  background: #1b1b1a;
+}
+:root[data-theme="analytics"] .nav-btn.active {
+  color: var(--text);
+  background: #343432;
+  box-shadow: inset 3px 0 var(--text);
+}
+:root[data-theme="analytics"] .brand-mark,
+:root[data-theme="analytics"] .primary-btn,
+:root[data-theme="analytics"] .lock-btn,
+:root[data-theme="analytics"] .action-icon,
+:root[data-theme="analytics"] .room-primary,
+:root[data-theme="analytics"] .preview-action,
+:root[data-theme="analytics"] .pick.selected {
+  color: #141414;
+  background: #e7e7e3;
+  box-shadow: none;
+}
+:root[data-theme="analytics"] .primary-btn:hover,
+:root[data-theme="analytics"] .room-primary:hover,
+:root[data-theme="analytics"] .preview-action:hover {
+  background: #ffffff;
+}
+:root[data-theme="analytics"] .room-secondary {
+  color: var(--text);
+  border-color: #777773;
+}
+:root[data-theme="analytics"] .room-secondary:hover {
+  color: #141414;
+  background: #e7e7e3;
+  border-color: #e7e7e3;
+}
+:root[data-theme="analytics"] .hero h1 span,
+:root[data-theme="analytics"] .trivia-copy h1 span {
+  color: var(--text);
+}
+:root[data-theme="analytics"] .avatar {
+  color: var(--text);
+  background: #252524;
+  border-color: #777773;
+}
+:root[data-theme="analytics"] .match-time b,
+:root[data-theme="analytics"] .scorebox small,
+:root[data-theme="analytics"] .market-top b,
+:root[data-theme="analytics"] .eyebrow,
+:root[data-theme="analytics"] .trivia-stat-stack b,
+:root[data-theme="analytics"] .action-card-head span,
+:root[data-theme="analytics"] .frontend-badge,
+:root[data-theme="analytics"] .open-room > div:nth-child(2) > span {
+  color: var(--muted);
+}
+:root[data-theme="analytics"] .frontend-badge {
+  border-color: var(--line);
+}
+:root[data-theme="analytics"] .signal-positive,
+:root[data-theme="analytics"] .signal-positive > span,
+:root[data-theme="analytics"] .signal-positive > b {
+  color: var(--green);
+}
+:root[data-theme="analytics"] .signal-negative,
+:root[data-theme="analytics"] .signal-negative > span,
+:root[data-theme="analytics"] .signal-negative > b {
+  color: var(--red);
+}
+:root[data-theme="analytics"] .signal-neutral,
+:root[data-theme="analytics"] .signal-neutral > span,
+:root[data-theme="analytics"] .signal-neutral > b {
+  color: var(--muted);
+}
+:root[data-theme="analytics"] .signal-positive .confidence-bar i,
+:root[data-theme="analytics"] .metric.signal-positive .metric-track i {
+  background: var(--green);
+}
+:root[data-theme="analytics"] .signal-negative .confidence-bar i,
+:root[data-theme="analytics"] .metric.signal-negative .metric-track i {
+  background: var(--red);
+}
 * {
   box-sizing: border-box;
 }
