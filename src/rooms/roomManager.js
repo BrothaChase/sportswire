@@ -22,3 +22,19 @@ export function createRoom() {
 export function getRoom(code) {
   return rooms.get(code);
 }
+
+export function joinRoom(code, displayName) {
+  const room = getRoom(code);
+
+  if (!room) {
+    return null;
+  }
+
+  const player = {
+    name: displayName,
+  };
+
+  room.players.push(player);
+
+  return room;
+}

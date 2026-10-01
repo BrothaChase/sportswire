@@ -156,6 +156,8 @@ document
   });
 
 const roomCode = document.getElementById("roomCode");
+const displayNameInput = document.getElementById("displayName");
+
 roomCode.addEventListener("input", () => {
   roomCode.value = roomCode.value
     .toUpperCase()
@@ -166,21 +168,42 @@ roomCode.addEventListener("input", () => {
     "Codes use six letters or numbers.";
 });
 
+displayNameInput.addEventListener("input", () => {
+  displayNameInput.classList.remove("input-error");
+});
+
 document
   .getElementById("joinRoomForm")
   .addEventListener("submit", async (event) => {
     event.preventDefault();
     const code = roomCode.value.trim();
-    const displayName = document.getElementById("displayName").value.trim();
+    const displayName = displayNameInput.value.trim();
+
     if (code.length !== 6) {
+      // show room code error if the code is not six characters
       roomCode.classList.add("input-error");
       document.getElementById("codeHelp").textContent =
         "Enter all six characters to find the room.";
       roomCode.focus();
       return;
     }
+
+    if (!displayName) {
+      displayNameInput.classList.add("input-error");
+      displayNameInput.focus();
+      notify("Enter a display name.");
+      return;
+    }
     // Fetch the room details from the server
-    const response = await fetch(`/api/rooms/${code}`);
+    const response = await fetch(`/api/rooms/${code}/players`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        displayName,
+      }),
+    });
     const room = await response.json();
 
     // error handling
@@ -194,9 +217,8 @@ document
 
     if (response.ok) {
       roomCode.classList.add("input-success");
-      document.getElementById("codeHelp").textContent = "Room found.";
-      notify(`Room ${code} was found.`);
-      return;
+      document.getElementById("codeHelp").textContent = "Room joined.";
+      notify(`You joined room ${code}.`);
     }
 
     // test fetching room details from the server
@@ -210,7 +232,6 @@ document
       host: displayName || "Player",
       action: "Enter preview",
     });
-    notify(`Room ${code} found in the frontend demo.`);
   });
 
 document.querySelectorAll(".open-room button").forEach((button) => {

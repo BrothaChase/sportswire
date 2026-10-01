@@ -1,8 +1,9 @@
-import { createRoom, getRoom } from "./rooms/roomManager.js";
+import { createRoom, getRoom, joinRoom } from "./rooms/roomManager.js";
 import express from "express";
 
 const app = express();
 
+app.use(express.json()); // Parse incoming JSON requests
 app.use(express.static("public")); // Serve static files from the "public" directory
 
 app.post("/api/rooms", (req, res) => {
@@ -21,6 +22,27 @@ app.get("/api/rooms/:code", (req, res) => {
   }
 
   res.json(room); // Send the room as JSON if it exists
+});
+
+app.post("/api/rooms/:code/players", (req, res) => {
+  const code = req.params.code.toUpperCase();
+  const displayName = req.body.displayName?.trim(); // trim any leading/trailing whitespace from the display name
+
+  if (!displayName) {
+    return res.status(400).json({
+      error: "Display name is required",
+    });
+  }
+
+  const room = joinRoom(code, displayName);
+
+  if (!room) {
+    return res.status(404).json({
+      error: "Room not found",
+    });
+  }
+
+  res.json(room);
 });
 
 const PORT = process.env.PORT || 3000;
