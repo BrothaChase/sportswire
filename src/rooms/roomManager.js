@@ -1,8 +1,9 @@
 import { makeCode } from "./roomCode.js";
+import { randomUUID } from "node:crypto";
 
 const rooms = new Map(); // A map to store all the rooms with their codes as keys
 
-export function createRoom() {
+export function createRoom({ name, category, questionCount, format }) {
   let code = makeCode(); // Ex: ABC123
 
   while (rooms.has(code)) {
@@ -11,6 +12,10 @@ export function createRoom() {
   //room object
   const room = {
     code,
+    name,
+    category,
+    questionCount,
+    format,
     players: [],
     status: "waiting",
   };
@@ -31,6 +36,7 @@ export function joinRoom(code, displayName) {
   }
 
   const player = {
+    id: randomUUID(),
     name: displayName,
   };
 

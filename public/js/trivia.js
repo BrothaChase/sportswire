@@ -145,21 +145,41 @@ document
   .getElementById("createRoomForm")
   .addEventListener("submit", async (event) => {
     event.preventDefault();
+
+    // Get the values from the form inputs
     const name = document.getElementById("roomName").value.trim();
     const category = document.getElementById("roomCategory").value;
     const questions = document.getElementById("questionCount").value;
+
     if (!name) return;
+
     const response = await fetch("/api/rooms", {
       method: "POST",
+
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      body: JSON.stringify({
+        name,
+        category,
+        questionCount: Number.parseInt(questions, 10), // Convert the question count to a number "10 questions" -> 10
+        format: selectedFormat,
+      }),
     });
 
     const room = await response.json();
 
+    if (!response.ok) {
+      notify(room.error || "Unable to create the room.");
+      return;
+    }
+
     renderPreview({
       code: room.code,
-      name,
-      category,
-      detail: `${questions} · ${selectedFormat}`,
+      name: room.name,
+      category: room.category,
+      detail: `${room.questionCount} questions · ${room.format}`,
       host: "Chase",
       action: "Host room",
     });
@@ -188,6 +208,7 @@ document
   .getElementById("joinRoomForm")
   .addEventListener("submit", async (event) => {
     event.preventDefault();
+
     const code = roomCode.value.trim();
     const displayName = displayNameInput.value.trim();
 
@@ -212,6 +233,7 @@ document
       headers: {
         "Content-Type": "application/json",
       },
+
       body: JSON.stringify({
         displayName,
       }),
@@ -249,6 +271,7 @@ document
 document.querySelectorAll(".open-room button").forEach((button) => {
   button.addEventListener("click", () => {
     const card = button.closest(".open-room");
+
     roomCode.value = card.dataset.code;
     document
       .getElementById("joinCard")
