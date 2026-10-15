@@ -24,7 +24,7 @@ app.use(express.json()); // Parse incoming JSON requests
 app.use(express.static(distDirectory)); // Serve the compiled React application
 
 app.post("/api/rooms", (req, res) => {
-  const { name, category, questionCount, format } = req.body ?? {};
+  const { name, category, questionCount, format, hostName } = req.body ?? {};
   const parsedQuestionCount = Number(questionCount);
 
   if (!allowedCategories.includes(category)) {
@@ -46,6 +46,8 @@ app.post("/api/rooms", (req, res) => {
   }
 
   const roomName = typeof name === "string" ? name.trim() : "";
+  const normalizedHostName =
+    typeof hostName === "string" ? hostName.trim() : "";
 
   if (!roomName) {
     return res.status(400).json({
@@ -59,14 +61,27 @@ app.post("/api/rooms", (req, res) => {
     });
   }
 
-  const room = createRoom({
+  if (!normalizedHostName) {
+    return res.status(400).json({
+      error: "Host name is required",
+    });
+  }
+
+  if (normalizedHostName.length > 20) {
+    return res.status(400).json({
+      error: "Host name must be 20 characters or fewer",
+    });
+  }
+
+  const result = createRoom({
     name: roomName,
     category,
     questionCount: parsedQuestionCount,
     format,
+    hostName: normalizedHostName,
   });
 
-  res.status(201).json(room); // Send the created room as the response
+  res.status(201).json(result); // Send the created room as the response
 });
 
 app.get("/api/rooms/:code", (req, res) => {
@@ -83,7 +98,10 @@ app.get("/api/rooms/:code", (req, res) => {
 
 app.post("/api/rooms/:code/players", (req, res) => {
   const code = req.params.code.toUpperCase();
-  const displayName = req.body.displayName?.trim(); // trim any leading/trailing whitespace from the display name
+  const displayName =
+    typeof req.body?.displayName === "string"
+      ? req.body.displayName.trim()
+      : ""; // Ensure displayName is a string and trim whitespace
 
   if (!displayName) {
     return res.status(400).json({
@@ -91,15 +109,21 @@ app.post("/api/rooms/:code/players", (req, res) => {
     });
   }
 
-  const room = joinRoom(code, displayName);
+  if (displayName.length > 20) {
+    return res.status(400).json({
+      error: "Display name must be 20 characters or fewer",
+    });
+  }
 
-  if (!room) {
+  const joinResult = joinRoom(code, displayName);
+
+  if (!joinResult) {
     return res.status(404).json({
       error: "Room not found",
     });
   }
 
-  res.json(room);
+  res.json(joinResult);
 });
 
 // React Router handles page navigation in the browser. For non-API page

@@ -3,12 +3,30 @@ import { randomUUID } from "node:crypto";
 
 const rooms = new Map(); // A map to store all the rooms with their codes as keys
 
-export function createRoom({ name, category, questionCount, format }) {
+function createPlayer(name, isHost = false) {
+  return {
+    id: randomUUID(),
+    name,
+    isHost,
+    isReady: true,
+  };
+}
+
+export function createRoom({
+  name,
+  category,
+  questionCount,
+  format,
+  hostName,
+}) {
   let code = makeCode(); // Ex: ABC123
 
   while (rooms.has(code)) {
     code = makeCode(); // generate a new code if the current one exist already
   }
+
+  const host = createPlayer(hostName, true);
+
   //room object
   const room = {
     code,
@@ -16,12 +34,15 @@ export function createRoom({ name, category, questionCount, format }) {
     category,
     questionCount,
     format,
-    players: [],
+    players: [host],
     status: "waiting",
   };
   rooms.set(code, room);
 
-  return room;
+  return {
+    room,
+    player: host,
+  };
 }
 
 export function getRoom(code) {
@@ -35,12 +56,12 @@ export function joinRoom(code, displayName) {
     return null;
   }
 
-  const player = {
-    id: randomUUID(),
-    name: displayName,
-  };
+  const player = createPlayer(displayName);
 
   room.players.push(player);
 
-  return room;
+  return {
+    room,
+    player,
+  };
 }

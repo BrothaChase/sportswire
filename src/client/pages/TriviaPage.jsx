@@ -28,11 +28,13 @@ function RoomPreview({ preview, onCopy, onAction }) {
   );
 }
 
+
 export default function TriviaPage() {
   const [themeName, setThemeName] = useTheme();
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [selectedFormat, setSelectedFormat] = useState("Classic");
   const [roomName, setRoomName] = useState("");
+  const [hostName, setHostName] = useState("");
   const [category, setCategory] = useState("NFL");
   const [questionCount, setQuestionCount] = useState(10);
   const [roomCode, setRoomCode] = useState("");
@@ -60,21 +62,23 @@ export default function TriviaPage() {
       const response = await fetch("/api/rooms", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: roomName.trim(), category, questionCount, format: selectedFormat }),
+        body: JSON.stringify({ name: roomName.trim(), category, questionCount, format: selectedFormat, hostName: hostName.trim() }),
       });
-      const room = await response.json();
+      const result = await response.json();
 
       if (!response.ok) {
-        notify(room.error || "Unable to create the room.");
+        notify(result.error || "Unable to create the room.");
         return;
       }
+
+      const { room, player } = result;
 
       setPreview({
         code: room.code,
         name: room.name,
         category: room.category,
         detail: `${room.questionCount} questions · ${room.format}`,
-        host: "Chase",
+        host: player.name,
         action: "Host room",
       });
       notify(`Room ${room.code} created for preview.`);
@@ -115,14 +119,17 @@ export default function TriviaPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ displayName: playerName }),
       });
-      const room = await response.json();
+      const result = await response.json();
 
       if (!response.ok) {
         setCodeState("error");
-        setCodeHelp(room.error || "Unable to find that room.");
+        setCodeHelp(result.error || "Unable to find that room.");
         notify(`Room ${code} was not found.`);
         return;
       }
+
+      const { room } = result;
+      const host = room.players.find((player) => player.isHost);
 
       setCodeState("success");
       setCodeHelp("Room joined.");
@@ -131,7 +138,7 @@ export default function TriviaPage() {
         name: room.name,
         category: room.category,
         detail: `${room.questionCount} questions · ${room.format}`,
-        host: playerName,
+        host: host ? host.name : "Unknown host",
         action: "Enter preview",
       });
       notify(`You joined room ${code}.`);
@@ -187,6 +194,7 @@ export default function TriviaPage() {
               <p className="action-copy">Choose the sport, format, and pace. We’ll generate a room code for your players.</p>
               <form className="room-form" onSubmit={createRoom}>
                 <label>Room name<input value={roomName} onChange={(event) => setRoomName(event.target.value)} name="roomName" maxLength="32" placeholder=" Enter Room Name" required /></label>
+                <label> Host name<input value={hostName} onChange={(event) => setHostName(event.target.value)} name="hostName" maxLength="20" placeholder="Enter Your Name" required /></label>
                 <div className="form-row">
                   <label>Category<select value={category} onChange={(event) => setCategory(event.target.value)} name="category">
                     {['NFL', 'NBA', 'NCAAF', 'MLB', 'Soccer', 'All Sports'].map((option) => <option key={option}>{option}</option>)}
