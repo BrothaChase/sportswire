@@ -16,7 +16,7 @@ function Icon({ type }) {
 
 export function Brand() {
   return (
-    <Link className="brand" to="/" aria-label="SportsWire lobby">
+    <Link className="brand" to="/" aria-label="SportsWire home">
       <div className="brand-mark">
         <svg viewBox="0 0 24 24" fill="none">
           <path d="M2.5 12h4l2.4-4.3 3.4 9 3.2-5.5h6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -33,7 +33,7 @@ export default function Sidebar({ activePage, onOpenSettings }) {
       <Brand />
       <div className="nav-label">Arena</div>
       <nav className="nav">
-        <Link className={`nav-btn ${activePage === "lobby" ? "active" : ""}`} to="/"><Icon type="lobby" /><span>Lobby</span></Link>
+        <Link className={`nav-btn ${activePage === "lobby" ? "active" : ""}`} to="/"><Icon type="lobby" /><span>Home</span></Link>
         <Link className={`nav-btn ${activePage === "trivia" ? "active" : ""}`} to="/trivia"><Icon type="trivia" /><span>Live Trivia</span></Link>
         <button className="nav-btn" type="button"><Icon type="stats" /><span>Stat Lab</span></button>
         <button className="nav-btn" type="button"><Icon type="leaderboard" /><span>Leaderboard</span></button>
@@ -56,7 +56,7 @@ export default function Sidebar({ activePage, onOpenSettings }) {
 export function MobileNav({ activePage, onOpenSettings }) {
   return (
     <nav className="mobile-nav">
-      <Link className={activePage === "lobby" ? "active" : ""} to="/">⌂<span>Lobby</span></Link>
+      <Link className={activePage === "lobby" ? "active" : ""} to="/">⌂<span>Home</span></Link>
       <Link className={activePage === "trivia" ? "active" : ""} to="/trivia">◉<span>Trivia</span></Link>
       <button type="button">▥<span>Stats</span></button>
       <button type="button">♛<span>Ranks</span></button>

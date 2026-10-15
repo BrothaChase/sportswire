@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { openRooms } from "../data/sportsData.js";
 import SettingsDialog from "../components/SettingsDialog.jsx";
 import Sidebar, { MobileNav, Profile } from "../components/Sidebar.jsx";
@@ -17,7 +18,7 @@ function RoomPreview({ preview, onCopy, onAction }) {
 
   return (
     <>
-      <div className="preview-live"><i />{preview.action === "Host room" ? "New private room" : "Room available"}</div>
+      <div className="preview-live"><i />{preview.isHost ? "New private room" : "Room available"}</div>
       <div className="preview-code-label">Room code</div>
       <button className="preview-code" type="button" onClick={onCopy} aria-label="Copy room code">{preview.code}<small>Tap to copy</small></button>
       <h3>{preview.name}</h3>
@@ -30,6 +31,7 @@ function RoomPreview({ preview, onCopy, onAction }) {
 
 
 export default function TriviaPage() {
+  const navigate = useNavigate();
   const [themeName, setThemeName] = useTheme();
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [selectedFormat, setSelectedFormat] = useState("Classic");
@@ -72,6 +74,7 @@ export default function TriviaPage() {
       }
 
       const { room, player } = result;
+      sessionStorage.setItem(`sportswire:room:${room.code}:playerId`, player.id);
 
       setPreview({
         code: room.code,
@@ -79,7 +82,8 @@ export default function TriviaPage() {
         category: room.category,
         detail: `${room.questionCount} questions · ${room.format}`,
         host: player.name,
-        action: "Host room",
+        isHost: true,
+        action: "Enter waiting room",
       });
       notify(`Room ${room.code} created for preview.`);
       window.setTimeout(() => previewRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" }), 0);
@@ -128,7 +132,8 @@ export default function TriviaPage() {
         return;
       }
 
-      const { room } = result;
+      const { room, player } = result;
+      sessionStorage.setItem(`sportswire:room:${room.code}:playerId`, player.id);
       const host = room.players.find((player) => player.isHost);
 
       setCodeState("success");
@@ -139,7 +144,8 @@ export default function TriviaPage() {
         category: room.category,
         detail: `${room.questionCount} questions · ${room.format}`,
         host: host ? host.name : "Unknown host",
-        action: "Enter preview",
+        isHost: false,
+        action: "Enter waiting room",
       });
       notify(`You joined room ${code}.`);
     } catch {
@@ -271,9 +277,9 @@ export default function TriviaPage() {
         </main>
 
         <aside className="rail trivia-rail">
-          <div className="rail-head"><h2>Room preview</h2><span>{preview ? (preview.action === "Host room" ? "CREATED" : "FOUND") : "READY"}</span></div>
+          <div className="rail-head"><h2>Room preview</h2><span>{preview ? (preview.isHost ? "CREATED" : "FOUND") : "READY"}</span></div>
           <div className="room-preview" ref={previewRef}>
-            <RoomPreview preview={preview} onCopy={copyRoomCode} onAction={() => notify("Frontend preview complete — live game connection comes next.")} />
+            <RoomPreview preview={preview} onCopy={copyRoomCode} onAction={() => navigate(`/rooms/${preview.code}`)} />
           </div>
           <div className="how-it-works">
             <h3>How it works</h3>
