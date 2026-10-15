@@ -1,11 +1,23 @@
 import { createRoom, getRoom, joinRoom } from "./rooms/roomManager.js";
 import express from "express";
 import path from "node:path";
+import { loadEnvFile } from "node:process";
 import { fileURLToPath } from "node:url";
+import { createBallDontLieProvider } from "./services/nfl/ballDontLieProvider.js";
+import { createNflGamesService } from "./services/nfl/nflGamesService.js";
+
+try {
+  loadEnvFile();
+} catch (error) {
+  if (error?.code !== "ENOENT") throw error;
+}
 
 const app = express();
 const currentDirectory = path.dirname(fileURLToPath(import.meta.url));
 const distDirectory = path.resolve(currentDirectory, "../dist");
+const nflGamesService = createNflGamesService({
+  provider: createBallDontLieProvider(),
+});
 
 const allowedCategories = [
   "NBA",
@@ -22,6 +34,29 @@ const allowedFormats = ["Classic", "Rapid Fire", "No Clock"];
 
 app.use(express.json()); // Parse incoming JSON requests
 app.use(express.static(distDirectory)); // Serve the compiled React application
+
+app.get("/api/nfl/games", async (req, res) => {
+  const season = Number(req.query.season);
+  const week = Number(req.query.week);
+
+  if (!Number.isInteger(season) || season < 2002 || season > 2100) {
+    return res.status(400).json({ error: "A valid NFL season is required" });
+  }
+
+  if (!Number.isInteger(week) || week < 1 || week > 22) {
+    return res.status(400).json({ error: "A valid NFL week is required" });
+  }
+
+  try {
+    const result = await nflGamesService.getGames({ season, week });
+    res.json(result);
+  } catch (error) {
+    console.error("Unable to load NFL games", error.message);
+    res.status(502).json({
+      error: "NFL game data is temporarily unavailable",
+    });
+  }
+});
 
 app.post("/api/rooms", (req, res) => {
   const { name, category, questionCount, format } = req.body ?? {};

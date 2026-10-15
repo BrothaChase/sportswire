@@ -9,6 +9,7 @@
     "dev": "concurrently -k -n server,client -c yellow,cyan \"npm:dev:server\" \"npm:dev:client\"",
     "dev:server": "node src/server.js",
     "dev:client": "vite",
+    "test": "node --test src/services/**/*.test.js src/client/**/*.test.js",
     "build": "vite build",
     "preview": "vite preview"
   },
