@@ -67,4 +67,4 @@ export function MobileNav({ activePage, onOpenSettings }) {
 
 export function Profile() {
   return <div className="profile"><div className="streak">🔥 8 day streak</div><div className="avatar">CB</div></div>;
-}
+} 

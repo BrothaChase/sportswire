@@ -128,11 +128,12 @@ export default function WaitingRoomPage() {
               <section className="waiting-footer">
                 <div><strong>{currentPlayer?.isHost ? "You're the host" : currentPlayer ? "You're in the room" : "Viewing the room"}</strong><p>Game controls are the next step. For now, invite players and watch the roster update.</p></div>
                 <button className="waiting-button waiting-button-muted" type="button" disabled>Start game · Coming soon</button>
+                <button className="waiting-button waiting-button-muted" type="button" disabled>Leave room · Coming soon</button>
               </section>
             </>
           )}
         </main>
-      </div>
+      </div >
 
       <SettingsDialog open={settingsOpen} onClose={() => setSettingsOpen(false)} themeName={themeName} onThemeChange={setThemeName} />
       <MobileNav activePage="trivia" onOpenSettings={() => setSettingsOpen(true)} />
