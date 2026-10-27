@@ -65,3 +65,36 @@ export function joinRoom(code, displayName) {
     player,
   };
 }
+
+export function leaveRoom(code, playerId) {
+  const room = getRoom(code);
+
+  if (!room) {
+    return { status: "room-not-found" };
+  }
+
+  const playerIndex = room.players.findIndex(
+    (player) => player.id === playerId,
+  );
+
+  if (playerIndex === -1) {
+    return { status: "player-not-found" };
+  }
+
+  const departingPlayer = room.players[playerIndex];
+  const departingPlayerWasHost = departingPlayer.isHost;
+
+  room.players.splice(playerIndex, 1);
+
+  if (room.players.length === 0) {
+    rooms.delete(code);
+    return {
+      status: "room-deleted",
+    };
+  }
+  // next player in array becomes host
+  if (departingPlayerWasHost) {
+    room.players[0].isHost = true;
+  }
+  return { status: "updated", room };
+}

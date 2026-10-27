@@ -1968,8 +1968,16 @@ button,
   background: var(--acid);
   color: #100d05;
 }
-.waiting-button-primary:hover {
-  background: var(--accent-hover);
+
+.leave-button {
+  background: var(--acid);
+  color: #100d05;
+}
+
+.leave-button:disabled {
+  background: var(--line);
+  color: var(--muted);
+  cursor: not-allowed;
 }
 .waiting-invite p {
   margin-top: 13px;
@@ -2007,6 +2015,7 @@ button,
   background: rgba(255, 255, 255, 0.035);
   cursor: not-allowed;
 }
+
 .waiting-state {
   max-width: 640px;
   margin: 48px auto;
