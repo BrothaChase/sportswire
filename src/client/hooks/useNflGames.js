@@ -24,20 +24,24 @@ export function createNflGamesStateFromPayload(payload) {
   };
 }
 
-export function useNflGames({ season, week }) {
+export function useNflGames({ season, week, enabled = true }) {
   const [requestState, setRequestState] = useState(createInitialNflGamesState);
   const activeRequest = useRef(null);
+  const activeQuery = useRef(null);
 
   const loadGames = useCallback(async () => {
+    if (!enabled) return;
     activeRequest.current?.abort();
     const controller = new AbortController();
     activeRequest.current = controller;
+    const queryKey = `${season}:${week}`;
+    const queryChanged = activeQuery.current !== queryKey;
+    activeQuery.current = queryKey;
 
-    setRequestState((current) => ({
-      ...current,
-      status: current.games.length > 0 ? "refreshing" : "loading",
-      error: null,
-    }));
+    // A failed refresh may keep this week's games, never a different week's.
+    setRequestState((current) => queryChanged
+      ? createInitialNflGamesState()
+      : { ...current, status: current.games.length > 0 ? "refreshing" : "loading", error: null });
 
     try {
       const searchParams = new URLSearchParams({
@@ -48,6 +52,7 @@ export function useNflGames({ season, week }) {
         signal: controller.signal,
       });
       const payload = await response.json().catch(() => ({}));
+      if (controller.signal.aborted) return;
 
       if (!response.ok) {
         throw new Error(payload.error || "Unable to load NFL games");
@@ -55,7 +60,7 @@ export function useNflGames({ season, week }) {
 
       setRequestState(createNflGamesStateFromPayload(payload));
     } catch (error) {
-      if (error.name === "AbortError") return;
+      if (controller.signal.aborted) return;
 
       setRequestState((current) => {
         if (current.games.length > 0) {
@@ -79,12 +84,19 @@ export function useNflGames({ season, week }) {
         activeRequest.current = null;
       }
     }
-  }, [season, week]);
+  }, [season, week, enabled]);
 
   useEffect(() => {
+    if (!enabled) return;
     loadGames();
-    return () => activeRequest.current?.abort();
-  }, [loadGames]);
+    const refresh = window.setInterval(() => {
+      if (document.visibilityState === "visible" && !activeRequest.current) loadGames();
+    }, 60_000);
+    return () => {
+      window.clearInterval(refresh);
+      activeRequest.current?.abort();
+    };
+  }, [loadGames, enabled]);
 
   return {
     ...requestState,
