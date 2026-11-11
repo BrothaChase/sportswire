@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import SettingsDialog from "../components/SettingsDialog.jsx";
 import Sidebar, { MobileNav, Profile } from "../components/Sidebar.jsx";
 import { useTheme } from "../theme.js";
@@ -14,6 +14,9 @@ export default function WaitingRoomPage() {
   const [themeName, setThemeName] = useTheme();
   const currentPlayerId = sessionStorage.getItem(`sportswire:room:${roomCode}:playerId`);
   const currentPlayer = room?.players.find((player) => player.id === currentPlayerId);
+  const [leaveError, setLeaveError] = useState("");
+  const navigate = useNavigate();
+  const [isLeaving, setIsLeaving] = useState(false);
 
   useEffect(() => {
     let active = true;
@@ -55,6 +58,43 @@ export default function WaitingRoomPage() {
     }
   }
 
+
+  async function handleLeaveRoom() {
+
+    try {
+      if (!currentPlayerId) {
+        setLeaveError("You are not a player in this room.");
+        return;
+      }
+
+      setLeaveError("");
+      setIsLeaving(true);
+
+      const response = await fetch(
+        `/api/rooms/${encodeURIComponent(roomCode)}/players/${encodeURIComponent(currentPlayerId)}`,
+        {
+          method: "DELETE",
+        },
+      );
+
+      // runs when http response is unsuccessful
+      if (!response.ok) { // false for HTTP 200-299 errors
+        const result = await response.json();
+        setLeaveError(result.error || "Failed to leave the room.");
+        return;
+      }
+
+      sessionStorage.removeItem(`sportswire:room:${roomCode}:playerId`);
+      navigate("/trivia");
+    } catch (error) {
+      setLeaveError("Unable to reach the SportsWire server. Please try again.");
+    } finally {
+      setIsLeaving(false);
+    }
+
+  }
+
+
   return (
     <>
       <div className="shell waiting-shell">
@@ -65,6 +105,7 @@ export default function WaitingRoomPage() {
             <div className="page-crumb"><span>Arena</span><b>/</b><Link to="/trivia">Trivia rooms</Link><b>/</b><strong>Waiting room</strong></div>
             <Profile />
           </header>
+          {leaveError && <div className="error" role="alert">{leaveError}</div>}
 
           {error ? (
             <section className="waiting-state" role="alert">
@@ -128,7 +169,7 @@ export default function WaitingRoomPage() {
               <section className="waiting-footer">
                 <div><strong>{currentPlayer?.isHost ? "You're the host" : currentPlayer ? "You're in the room" : "Viewing the room"}</strong><p>Game controls are the next step. For now, invite players and watch the roster update.</p></div>
                 <button className="waiting-button waiting-button-muted" type="button" disabled>Start game · Coming soon</button>
-                <button className="waiting-button waiting-button-muted" type="button" disabled>Leave room · Coming soon</button>
+                <button onClick={handleLeaveRoom} className="waiting-button leave-button" type="button" disabled={!currentPlayerId || isLeaving}>{isLeaving ? "Leaving..." : "Leave room"}</button>
               </section>
             </>
           )}

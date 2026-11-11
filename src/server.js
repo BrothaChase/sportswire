@@ -1,11 +1,28 @@
-import { createRoom, getRoom, joinRoom } from "./rooms/roomManager.js";
+import {
+  createRoom,
+  getRoom,
+  joinRoom,
+  leaveRoom,
+} from "./rooms/roomManager.js";
 import express from "express";
 import path from "node:path";
+import { loadEnvFile } from "node:process";
 import { fileURLToPath } from "node:url";
+import { createBallDontLieProvider } from "./services/nfl/ballDontLieProvider.js";
+import { createNflGamesService } from "./services/nfl/nflGamesService.js";
+
+try {
+  loadEnvFile();
+} catch (error) {
+  if (error?.code !== "ENOENT") throw error;
+}
 
 const app = express();
 const currentDirectory = path.dirname(fileURLToPath(import.meta.url));
 const distDirectory = path.resolve(currentDirectory, "../dist");
+const nflGamesService = createNflGamesService({
+  provider: createBallDontLieProvider(),
+});
 
 const allowedCategories = [
   "NBA",
@@ -23,6 +40,30 @@ const allowedFormats = ["Classic", "Rapid Fire", "No Clock"];
 app.use(express.json()); // Parse incoming JSON requests
 app.use(express.static(distDirectory)); // Serve the compiled React application
 
+app.get("/api/nfl/games", async (req, res) => {
+  const season = Number(req.query.season);
+  const week = Number(req.query.week);
+
+  if (!Number.isInteger(season) || season < 2002 || season > 2100) {
+    return res.status(400).json({ error: "A valid NFL season is required" });
+  }
+
+  if (!Number.isInteger(week) || week < 1 || week > 18) {
+    return res.status(400).json({ error: "A regular-season NFL week from 1 to 18 is required" });
+  }
+
+  try {
+    const result = await nflGamesService.getGames({ season, week });
+    res.json(result);
+  } catch (error) {
+    console.error("Unable to load NFL games", error.message);
+    res.status(502).json({
+      error: "NFL game data is temporarily unavailable",
+    });
+  }
+});
+
+// create room route
 app.post("/api/rooms", (req, res) => {
   const { name, category, questionCount, format, hostName } = req.body ?? {};
   const parsedQuestionCount = Number(questionCount);
@@ -84,8 +125,10 @@ app.post("/api/rooms", (req, res) => {
   res.status(201).json(result); // Send the created room as the response
 });
 
+// get room by code route
 app.get("/api/rooms/:code", (req, res) => {
   // :code is a route parameter representing the room code
+
   const code = req.params.code.toUpperCase();
   const room = getRoom(code); // Retrieve the room with the given code
 
@@ -96,6 +139,7 @@ app.get("/api/rooms/:code", (req, res) => {
   res.json(room); // Send the room as JSON if it exists
 });
 
+// player join route
 app.post("/api/rooms/:code/players", (req, res) => {
   const code = req.params.code.toUpperCase();
   const displayName =
@@ -124,6 +168,35 @@ app.post("/api/rooms/:code/players", (req, res) => {
   }
 
   res.json(joinResult);
+});
+
+// player leave route
+app.delete("/api/rooms/:code/players/:playerId", (req, res) => {
+  const code = req.params.code.toUpperCase();
+  const playerId = req.params.playerId;
+
+  const result = leaveRoom(code, playerId);
+
+  if (result.status === "room-not-found") {
+    return res.status(404).json({
+      error: "Room not found",
+    });
+  }
+
+  if (result.status === "player-not-found") {
+    return res.status(404).json({
+      error: "Player not found",
+    });
+  }
+
+  if (result.status === "room-deleted") {
+    return res.status(204).send();
+  }
+
+  return res.status(200).json({
+    status: "updated",
+    room: result.room,
+  });
 });
 
 // React Router handles page navigation in the browser. For non-API page
