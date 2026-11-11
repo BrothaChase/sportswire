@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { openRooms } from "../data/sportsData.js";
 import SettingsDialog from "../components/SettingsDialog.jsx";
 import Sidebar, { MobileNav, Profile } from "../components/Sidebar.jsx";
@@ -17,7 +18,7 @@ function RoomPreview({ preview, onCopy, onAction }) {
 
   return (
     <>
-      <div className="preview-live"><i />{preview.action === "Host room" ? "New private room" : "Room available"}</div>
+      <div className="preview-live"><i />{preview.isHost ? "New private room" : "Room available"}</div>
       <div className="preview-code-label">Room code</div>
       <button className="preview-code" type="button" onClick={onCopy} aria-label="Copy room code">{preview.code}<small>Tap to copy</small></button>
       <h3>{preview.name}</h3>
@@ -28,11 +29,14 @@ function RoomPreview({ preview, onCopy, onAction }) {
   );
 }
 
+
 export default function TriviaPage() {
+  const navigate = useNavigate();
   const [themeName, setThemeName] = useTheme();
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [selectedFormat, setSelectedFormat] = useState("Classic");
   const [roomName, setRoomName] = useState("");
+  const [hostName, setHostName] = useState("");
   const [category, setCategory] = useState("NFL");
   const [questionCount, setQuestionCount] = useState(10);
   const [roomCode, setRoomCode] = useState("");
@@ -60,22 +64,26 @@ export default function TriviaPage() {
       const response = await fetch("/api/rooms", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: roomName.trim(), category, questionCount, format: selectedFormat }),
+        body: JSON.stringify({ name: roomName.trim(), category, questionCount, format: selectedFormat, hostName: hostName.trim() }),
       });
-      const room = await response.json();
+      const result = await response.json();
 
       if (!response.ok) {
-        notify(room.error || "Unable to create the room.");
+        notify(result.error || "Unable to create the room.");
         return;
       }
+
+      const { room, player } = result;
+      sessionStorage.setItem(`sportswire:room:${room.code}:playerId`, player.id);
 
       setPreview({
         code: room.code,
         name: room.name,
         category: room.category,
         detail: `${room.questionCount} questions · ${room.format}`,
-        host: "Chase",
-        action: "Host room",
+        host: player.name,
+        isHost: true,
+        action: "Enter waiting room",
       });
       notify(`Room ${room.code} created for preview.`);
       window.setTimeout(() => previewRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" }), 0);
@@ -115,14 +123,18 @@ export default function TriviaPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ displayName: playerName }),
       });
-      const room = await response.json();
+      const result = await response.json();
 
       if (!response.ok) {
         setCodeState("error");
-        setCodeHelp(room.error || "Unable to find that room.");
+        setCodeHelp(result.error || "Unable to find that room.");
         notify(`Room ${code} was not found.`);
         return;
       }
+
+      const { room, player } = result;
+      sessionStorage.setItem(`sportswire:room:${room.code}:playerId`, player.id);
+      const host = room.players.find((player) => player.isHost);
 
       setCodeState("success");
       setCodeHelp("Room joined.");
@@ -131,8 +143,9 @@ export default function TriviaPage() {
         name: room.name,
         category: room.category,
         detail: `${room.questionCount} questions · ${room.format}`,
-        host: playerName,
-        action: "Enter preview",
+        host: host ? host.name : "Unknown host",
+        isHost: false,
+        action: "Enter waiting room",
       });
       notify(`You joined room ${code}.`);
     } catch {
@@ -187,6 +200,7 @@ export default function TriviaPage() {
               <p className="action-copy">Choose the sport, format, and pace. We’ll generate a room code for your players.</p>
               <form className="room-form" onSubmit={createRoom}>
                 <label>Room name<input value={roomName} onChange={(event) => setRoomName(event.target.value)} name="roomName" maxLength="32" placeholder=" Enter Room Name" required /></label>
+                <label> Host name<input value={hostName} onChange={(event) => setHostName(event.target.value)} name="hostName" maxLength="20" placeholder="Enter Your Name" required /></label>
                 <div className="form-row">
                   <label>Category<select value={category} onChange={(event) => setCategory(event.target.value)} name="category">
                     {['NFL', 'NBA', 'NCAAF', 'MLB', 'Soccer', 'All Sports'].map((option) => <option key={option}>{option}</option>)}
@@ -263,9 +277,9 @@ export default function TriviaPage() {
         </main>
 
         <aside className="rail trivia-rail">
-          <div className="rail-head"><h2>Room preview</h2><span>{preview ? (preview.action === "Host room" ? "CREATED" : "FOUND") : "READY"}</span></div>
+          <div className="rail-head"><h2>Room preview</h2><span>{preview ? (preview.isHost ? "CREATED" : "FOUND") : "READY"}</span></div>
           <div className="room-preview" ref={previewRef}>
-            <RoomPreview preview={preview} onCopy={copyRoomCode} onAction={() => notify("Frontend preview complete — live game connection comes next.")} />
+            <RoomPreview preview={preview} onCopy={copyRoomCode} onAction={() => navigate(`/rooms/${preview.code}`)} />
           </div>
           <div className="how-it-works">
             <h3>How it works</h3>
