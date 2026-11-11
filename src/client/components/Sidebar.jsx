@@ -35,7 +35,7 @@ export default function Sidebar({ activePage, onOpenSettings }) {
       <nav className="nav">
         <Link className={`nav-btn ${activePage === "lobby" ? "active" : ""}`} to="/"><Icon type="lobby" /><span>Home</span></Link>
         <Link className={`nav-btn ${activePage === "trivia" ? "active" : ""}`} to="/trivia"><Icon type="trivia" /><span>Live Trivia</span></Link>
-        <button className="nav-btn" type="button"><Icon type="stats" /><span>Stat Lab</span></button>
+        <Link className={`nav-btn ${activePage === "stats" ? "active" : ""}`} to="/stats/nfl"><Icon type="stats" /><span>Stat Lab</span></Link>
         <button className="nav-btn" type="button"><Icon type="leaderboard" /><span>Leaderboard</span></button>
       </nav>
       <div className="nav-label" style={{ marginTop: 18 }}>You</div>
@@ -58,7 +58,7 @@ export function MobileNav({ activePage, onOpenSettings }) {
     <nav className="mobile-nav">
       <Link className={activePage === "lobby" ? "active" : ""} to="/">⌂<span>Home</span></Link>
       <Link className={activePage === "trivia" ? "active" : ""} to="/trivia">◉<span>Trivia</span></Link>
-      <button type="button">▥<span>Stats</span></button>
+      <Link className={activePage === "stats" ? "active" : ""} to="/stats/nfl">▥<span>Stats</span></Link>
       <button type="button">♛<span>Ranks</span></button>
       <button type="button" onClick={onOpenSettings}>⚙<span>Settings</span></button>
     </nav>
