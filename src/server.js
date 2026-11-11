@@ -48,8 +48,8 @@ app.get("/api/nfl/games", async (req, res) => {
     return res.status(400).json({ error: "A valid NFL season is required" });
   }
 
-  if (!Number.isInteger(week) || week < 1 || week > 22) {
-    return res.status(400).json({ error: "A valid NFL week is required" });
+  if (!Number.isInteger(week) || week < 1 || week > 18) {
+    return res.status(400).json({ error: "A regular-season NFL week from 1 to 18 is required" });
   }
 
   try {
