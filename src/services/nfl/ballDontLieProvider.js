@@ -8,7 +8,7 @@ const teamColors = {
   LV: "#a5acaf", LAC: "#0080c6", LAR: "#003594", MIA: "#008e97",
   MIN: "#4f2683", NE: "#002244", NO: "#d3bc8d", NYG: "#0b2265",
   NYJ: "#125740", PHI: "#004c54", PIT: "#ffb612", SEA: "#002244",
-  SF: "#aa0000", TB: "#d50a0a", TEN: "#0c2340", WAS: "#5a1414",
+  SF: "#aa0000", TB: "#d50a0a", TEN: "#0c2340", WAS: "#5a1414", WSH: "#5a1414",
 };
 
 function normalizeStatus(statusState) {
