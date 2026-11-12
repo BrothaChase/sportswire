@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { createNflGamesService } from "./nflGamesService.js";
-import { TtlCache } from "./ttlCache.js";
+import { TtlCache } from "../ttlCache.js";
 
 test("reuses fresh data without calling the provider again", async () => {
   let providerCalls = 0;

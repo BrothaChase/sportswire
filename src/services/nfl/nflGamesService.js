@@ -1,4 +1,4 @@
-import { TtlCache } from "./ttlCache.js";
+import { TtlCache } from "../ttlCache.js";
 
 export function createNflGamesService({
   provider,
