@@ -3,6 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import SettingsDialog from "../components/SettingsDialog.jsx";
 import Sidebar, { MobileNav, Profile } from "../components/Sidebar.jsx";
 import NflGameCard from "../components/NflGameCard.jsx";
+import ScoreboardLeagueNav from "../components/ScoreboardLeagueNav.jsx";
 import { isGameToday, readNflScheduleQuery, suggestNflWeek } from "../data/nflSchedule.js";
 import { useNflGames } from "../hooks/useNflGames.js";
 import { useTheme } from "../theme.js";
@@ -42,6 +43,7 @@ export default function NflScoreboardPage() {
             </section>
           ) : (
             <>
+              <ScoreboardLeagueNav activeLeague="nfl" />
               <div className="nfl-intro">
                 <div><span className="nfl-eyebrow">THE WEEK IN FOOTBALL</span><h1>NFL Scoreboard<span>.</span></h1><p>The matchups. The scores. Your week at a glance.</p></div>
                 <span className="nfl-season-tag">REGULAR SEASON</span>

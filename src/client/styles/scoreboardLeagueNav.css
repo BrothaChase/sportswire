@@ -1,0 +1,5 @@
+.scoreboard-league-switcher { display: flex; width: fit-content; gap: 5px; margin-top: 24px; padding: 4px; border: 1px solid var(--line); border-radius: 9px; background: var(--panel); }
+.scoreboard-league-switcher a { padding: 7px 14px; border-radius: 6px; color: var(--muted); font-size: .7rem; font-weight: 700; }
+.scoreboard-league-switcher a[aria-current="page"] { color: var(--acid); background: rgba(var(--accent-rgb), .1); }
+.scoreboard-league-switcher a:focus-visible { outline: 2px solid var(--acid); outline-offset: 3px; }
+
