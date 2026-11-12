@@ -8,6 +8,9 @@ import express from "express";
 import path from "node:path";
 import { loadEnvFile } from "node:process";
 import { fileURLToPath } from "node:url";
+import { createBallDontLieNbaProvider } from "./services/nba/ballDontLieProvider.js";
+import { isValidIsoDate } from "./services/nba/nbaDate.js";
+import { createNbaGamesService } from "./services/nba/nbaGamesService.js";
 import { createBallDontLieProvider } from "./services/nfl/ballDontLieProvider.js";
 import { createNflGamesService } from "./services/nfl/nflGamesService.js";
 
@@ -22,6 +25,10 @@ const currentDirectory = path.dirname(fileURLToPath(import.meta.url));
 const distDirectory = path.resolve(currentDirectory, "../dist");
 const nflGamesService = createNflGamesService({
   provider: createBallDontLieProvider(),
+});
+
+const nbaGamesService = createNbaGamesService({
+  provider: createBallDontLieNbaProvider(),
 });
 
 const allowedCategories = [
@@ -49,7 +56,9 @@ app.get("/api/nfl/games", async (req, res) => {
   }
 
   if (!Number.isInteger(week) || week < 1 || week > 18) {
-    return res.status(400).json({ error: "A regular-season NFL week from 1 to 18 is required" });
+    return res
+      .status(400)
+      .json({ error: "A regular-season NFL week from 1 to 18 is required" });
   }
 
   try {
@@ -59,6 +68,27 @@ app.get("/api/nfl/games", async (req, res) => {
     console.error("Unable to load NFL games", error.message);
     res.status(502).json({
       error: "NFL game data is temporarily unavailable",
+    });
+  }
+});
+
+// NBA games route with date validation
+app.get("/api/nba/games", async (req, res) => {
+  const date = req.query.date;
+
+  if (!isValidIsoDate(date)) {
+    return res.status(400).json({
+      error: "A valid NBA date in YYYY-MM-DD format is required",
+    });
+  }
+
+  try {
+    const result = await nbaGamesService.getGames({ date });
+    res.json(result);
+  } catch (error) {
+    console.error("Unable to load NBA games", error.message);
+    res.status(502).json({
+      error: "NBA game data is temporarily unavailable",
     });
   }
 });
